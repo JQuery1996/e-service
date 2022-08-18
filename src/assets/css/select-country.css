@@ -1,0 +1,34 @@
+.flags-container {
+    width: 59%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 7%;
+}
+.country-img {
+    width: 100%;
+}
+.action-btn-div-select-country {
+    width: 76%;
+}
+
+/* ipad */
+@media (max-width: 768px) {
+    .flags-container {
+        width: 100%;
+    }
+    .action-btn-div-select-country {
+        width: 100%;
+    }
+}
+
+@media (max-width: 650px) {
+    .country-img {
+        width: 83%;
+    }
+}
+/* mobile */
+@media (max-width: 480px) {
+}
+/* small mobile */
+@media (max-width: 360px) {
+}

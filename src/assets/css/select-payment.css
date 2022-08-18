@@ -1,0 +1,59 @@
+.service-name-conteiner{
+  font-size: 30px;
+  font-weight: 700;
+  margin-top: 4%;
+  margin-bottom: 3%;
+}
+.payment-method-container{
+  margin-right: 5%;
+}
+.paypal-method{
+  padding: 2% 8%;
+  background-color: #02676B;
+  display: flex;
+  color: white;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px
+}   
+.payment-method-conteiner p {
+  font-size: 20px;
+}
+.paypal-img, .visa-img{
+  width: 71%;
+}
+.visa-method{
+  padding: 2% 8%;
+  display: flex;
+  color: black;
+}
+
+/* ipad */
+@media (max-width: 768px) {
+  .service-name-conteiner{
+    font-size: 20px;
+    margin-top: 8%;
+    margin-bottom: 5%;
+  }
+}
+
+/* mobile */
+@media (max-width: 480px) {
+  .service-name-conteiner{
+    font-size: 18px;
+    margin-top: 12%;
+    margin-bottom: 7%;
+  }
+
+  .payment-method-conteiner p {
+    font-size: 17px;
+  }
+}
+ /* small mobile */
+@media (max-width: 360px) {
+  .service-name-conteiner{
+    font-size: 16px;
+    margin-top: 16%;
+    margin-bottom: 10%;
+  } 
+}
+

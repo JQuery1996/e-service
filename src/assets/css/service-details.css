@@ -1,0 +1,44 @@
+.breadcrumbs{
+  margin: 3% 0 1% 0;
+  color: #02676B;
+}
+.service-name-details{
+  font-size: 30px;
+  font-weight: 700;
+}
+.service-price-details{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.service-price{
+  font-weight: 700;
+  font-size: 20px;
+}
+.buy-service-btn{
+  border-radius: 5px;
+  width: 100%;
+  margin: 5% auto !important;
+}
+.service-details-container{
+  margin-right: 4%;
+}
+
+/* ipad */
+@media (max-width: 768px) {
+  .service-desc-details{
+    font-size: 19px;
+  }
+  .service-name-details{
+    font-size: 20px;
+  }
+}
+
+/* mobile */
+@media (max-width: 480px) {
+
+}
+ /* small mobile */
+@media (max-width: 360px) {
+ 
+}

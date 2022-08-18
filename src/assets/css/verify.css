@@ -1,0 +1,45 @@
+.pin-div {
+    display: flex;
+    width: 100%;
+}
+.pin-div input {
+    text-align: center;
+    font-size: 40px;
+}
+.pin {
+    width: 84%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    height: 6rem !important;
+    text-align: center;
+}
+.resend-pin-div {
+    width: 100%;
+    text-align: right;
+}
+.resend-pin-link {
+    color: #02676b;
+    text-decoration: none;
+}
+/* ipad */
+@media (max-width: 768px) {
+    .pin {
+        width: 88%;
+        height: 5rem !important;
+    }
+    .resend-pin-link {
+        font-size: 13px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .pin {
+        height: 3rem !important;
+    }
+}
+/* mobile */
+@media (max-width: 480px) {
+}
+/* small mobile */
+@media (max-width: 360px) {
+}

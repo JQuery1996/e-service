@@ -1,0 +1,46 @@
+.filtering-container{
+  display: flex;
+  justify-content: space-between;
+  width: 92%;
+  margin: auto;
+}
+.all-filters-container{
+  width: 50%;
+  display: flex;
+}
+.filter-container{
+  width: 25%;
+  background-color: white;
+}
+.sort-container{
+  background-color: white;
+}
+
+/* ipad */
+@media (max-width: 768px) {
+  .all-filters-container{
+    width: 70%;
+  }
+  .filter-container{
+    width: 30%;
+  }
+}
+
+/* mobile */
+@media (max-width: 480px) {
+  .filtering-container{
+    display: block;
+  }
+  .all-filters-container {
+    width: 100%;
+  }
+  .sort-container{
+    width: 31%;
+    background-color: transparent;
+    margin-top: 2%;
+  }
+}
+ /* small mobile */
+@media (max-width: 360px) {
+ 
+}

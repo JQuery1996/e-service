@@ -1,0 +1,9 @@
+<svg id="send-square" xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19">
+  <path id="Vector" d="M5.541,15.833h4.75c3.958,0,5.541-1.583,5.541-5.541V5.541C15.833,1.583,14.249,0,10.291,0H5.541C1.583,0,0,1.583,0,5.541v4.75C0,14.249,1.583,15.833,5.541,15.833Z" transform="translate(1.584 1.584)" fill="none" stroke="#02676b" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  <g id="Group" transform="translate(7.124 5.153)">
+    <path id="Vector-2" data-name="Vector" d="M0,2.376,2.376,0,4.751,2.376" fill="none" stroke="#02676b" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Vector-3" data-name="Vector" d="M0,0V6.335" transform="translate(2.376)" fill="none" stroke="#02676b" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  </g>
+  <path id="Vector-4" data-name="Vector" d="M0,0A15,15,0,0,0,9.5,0" transform="translate(4.749 13.07)" fill="none" stroke="#02676b" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+  <path id="Vector-5" data-name="Vector" d="M0,0H19V19H0Z" fill="none" opacity="0"/>
+</svg>

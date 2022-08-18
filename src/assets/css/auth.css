@@ -1,0 +1,92 @@
+.content-container {
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+.asid-div {
+    background-color: #02676b;
+    width: 30%;
+}
+.bank-img-container {
+    width: 45%;
+    margin: auto;
+    margin: 51% auto 5%;
+}
+.bank-img {
+    width: 100%;
+}
+.smile-img-container {
+    width: 11%;
+    margin: 6% 9% 4% 4%;
+}
+.smile-img {
+    width: 100%;
+}
+.main-div {
+    width: 70%;
+}
+.not-registerd-div {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+    margin-top: 3%;
+}
+.not-registerd-txt {
+    color: #929292;
+}
+.registerd-link {
+    color: #02676b;
+    text-decoration: none;
+}
+.title-text {
+    color: #02676b;
+}
+.form-content {
+    width: 50%;
+    margin: 10% auto 0;
+}
+.action-btn-div {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+.action-btn {
+    border-radius: 5px !important;
+    width: 100%;
+}
+
+@media (max-width: 1000px) {
+    .form-content {
+        width: 70%;
+    }
+    .social-img-div {
+        width: 14%;
+    }
+}
+
+/* ipad */
+@media (max-width: 768px) {
+    .form-content {
+        width: 70%;
+    }
+}
+
+/* mobile */
+@media (max-width: 480px) {
+    .asid-div {
+        display: none;
+    }
+    .main-div {
+        width: 100%;
+    }
+    .social-img-div {
+        width: 15%;
+    }
+}
+
+/* small mobile */
+@media (max-width: 360px) {
+    .social-img-div {
+        width: 23%;
+    }
+}

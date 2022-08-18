@@ -1,0 +1,35 @@
+.price-buy-service-container{
+  background-color: white;
+  padding: 2%;
+}
+.price-buy-service{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+}
+.buy-btn-container{
+  width: 90%;
+  margin: 5% auto 1% !important;
+}
+.buy-btn{
+  width: 100%;
+  border-radius: 5px;
+}
+.buy-service-desc{
+  color: #B0B0B0;
+}
+
+/* ipad */
+@media (max-width: 768px) {
+}
+
+/* mobile */
+@media (max-width: 480px) {
+}
+ /* small mobile */
+@media (max-width: 360px) {
+ .service-name-buy{
+  font-size: 17px;
+ }
+}

@@ -38,6 +38,7 @@ export const VerifyForm: FC<VerifyFormProps> = ({ ...props }) => {
                             key={element}
                             sx={{ mb: 2 }}
                             className="pin"
+                            value={pin[element]}
                             onChange={(e) => handleChange(e, element)}
                             isPinInput={true}
                         />

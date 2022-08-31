@@ -15,7 +15,7 @@ import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useRegisterState } from "./useRegisterState";
 import { Validator } from "utils/validation";
-import { isVariableDeclaration } from "typescript";
+import { useAuth } from "utils/hooks/useAuth";
 
 export interface RegisterFormProps {}
 
@@ -35,9 +35,7 @@ export const RegisterForm: FC<RegisterFormProps> = ({ ...props }) => {
         disableRegister,
     } = useRegisterState(passwordValidationConfig);
 
-    function handleRegister() {
-        console.log({ email, fullName, password });
-    }
+    const { register } = useAuth();
 
     return (
         <Container>
@@ -98,7 +96,7 @@ export const RegisterForm: FC<RegisterFormProps> = ({ ...props }) => {
                     <Button
                         className="action-btn"
                         sx={{ mt: 4 }}
-                        onClick={handleRegister}
+                        onClick={() => register(fullName, email, password)}
                         disabled={disableRegister}
                     >
                         {t("register_btn")}

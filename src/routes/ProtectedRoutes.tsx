@@ -16,55 +16,54 @@ const BuyService = lazy(() => import("pages/buyService"));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const ProtectedRoutes = {
-  path: "/",
-  element: <MainLayout />,
-  expect: true,
-  children: [
-    {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/service/:id",
-      element: <Service />,
-      expect: true,
-    },
-    {
-      path: "/service/select-patment",
-      element: <SelectPayment />,
-      expect: true,
-    },
-    {
-      path: "/service/buy",
-      element: <BuyService />,
-      expect: true,
-    },
-    {
-      path: "/profile",
-      element: <Profile />,
-    },
-    {
-      path: "/service/filter",
-      expect: true,
-      element: <FilterServices />,
-    },
-    {
-      path: "/service/requested",
-      expect: true,
-      element: <ReqestedServices />,
-    },
-    {
-      path: "/service/result",
-      expect: true,
-      element: <PaymentResult />,
-    },
-    {
-      path: "*",
-      element: <Home />,
-    },
-  ],
+    path: "/",
+    element: <MainLayout />,
+    expect: true,
+    children: [
+        {
+            path: "/",
+            element: <Home />,
+        },
+        {
+            path: "/service/:id",
+            element: <Service />,
+            expect: true,
+        },
+        {
+            path: "/service/select-patment",
+            element: <SelectPayment />,
+            expect: true,
+        },
+        {
+            path: "/service/buy",
+            element: <BuyService />,
+            expect: true,
+        },
+        {
+            path: "/profile",
+            element: <Profile />,
+        },
+        {
+            path: "/service/filter",
+            expect: true,
+            element: <FilterServices />,
+        },
+        {
+            path: "/service/requested",
+            expect: true,
+            element: <ReqestedServices />,
+        },
+        {
+            path: "/service/result",
+            expect: true,
+            element: <PaymentResult />,
+        },
+        {
+            path: "*",
+            element: <Home />,
+        },
+    ],
 };
-
 
 // let ProtectedRoutes = [
 // {
@@ -113,12 +112,9 @@ const ProtectedRoutes = {
 //       path: "/login",
 //       element: <Login />,
 //     },
-   
+
 //   ],
 // },
 // ];
-
-
-
 
 export default ProtectedRoutes;

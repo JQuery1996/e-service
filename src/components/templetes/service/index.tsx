@@ -27,6 +27,7 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = (props) => {
     const { t } = useTranslation();
     const breadcrumbs = [
         <Link
+            key="_1"
             underline="hover"
             sx={{ display: "flex", alignItems: "center" }}
             color="inherit"
@@ -36,6 +37,7 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = (props) => {
             الفئة الرئيسية
         </Link>,
         <Link
+            key="_2"
             underline="hover"
             sx={{ display: "flex", alignItems: "center" }}
             color="inherit"

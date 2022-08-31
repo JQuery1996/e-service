@@ -1,12 +1,8 @@
-import { HomeTemplete } from 'components/templetes';
-import { FC } from 'react';
-export interface HomePageProps {
-
-}
+import { HomeTemplete } from "components/templetes";
+import { FC } from "react";
+export interface HomePageProps {}
 
 const HomePage: FC<HomePageProps> = () => {
-    return (
-        <HomeTemplete />
-    );
-}
+    return <HomeTemplete />;
+};
 export default HomePage;

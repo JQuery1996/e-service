@@ -1,6 +1,6 @@
 export * from "./searchInput";
 export * from "./profileAvatar";
-export * from "./serviceCard";
+export * from "./service-card";
 export * from "./submitInput";
 export * from "./details";
 export * from "./InformationList";
@@ -15,3 +15,5 @@ export * from "./verify";
 export * from "./register";
 export * from "./selectCountry";
 export * from "./buyServiceForm";
+export * from "./sub-category";
+export * from "./service-card-container";

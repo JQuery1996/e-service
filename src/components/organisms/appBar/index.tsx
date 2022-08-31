@@ -22,7 +22,9 @@ export const ResponsiveAppBar = () => {
                             cursor: "pointer",
                         }}
                         onClick={() => {
-                            navigate("/");
+                            navigate(
+                                process.env.REACT_APP_FRONT_END_HOME_PAGE!,
+                            );
                         }}
                     >
                         <img

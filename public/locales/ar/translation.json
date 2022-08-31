@@ -50,5 +50,11 @@
     "privecy": "سياسة الخصوصية",
     "rules": "شروط الاستخدام",
     "about": "حول موقعنا",
-    "field_is_required": "هذا الحقل مطلوب"
+    "field_is_required": "هذا الحقل مطلوب",
+    "UserName_or_password_is_incorrect": "اسم المستخدم او كلمة المرور خاطئه",
+    "services": "الخدمات",
+    "enter": "دخول",
+    "category": "الفئه",
+    "subCategory": "الفئه الفرعيه",
+    "show": "عرض"
 }

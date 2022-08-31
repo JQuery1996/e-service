@@ -50,5 +50,11 @@
     "privecy": "Privecy",
     "rules": "Visa",
     "about": "About Us",
-    "field_is_required": "this field is required"
+    "field_is_required": "this field is required",
+    "UserName_or_password_is_incorrect": "UserName or password is incorrect",
+    "services": "Services",
+    "enter": "Enter",
+    "category": "Category",
+    "subCategory": "SubCategory",
+    "show": "show"
 }

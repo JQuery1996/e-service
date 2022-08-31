@@ -9,13 +9,14 @@ import {
     InputAdornment,
     IconButton,
 } from "@mui/material";
+
 import { EInput } from "components/atoms";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useState, useMemo } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Validator } from "utils/validation";
 import { useLoginState } from "./useLoginState";
+import { useAuth } from "utils/hooks/useAuth";
 
 export interface LoginFormProps {}
 
@@ -23,7 +24,6 @@ const passwordValidationConfig = { min: 8 };
 
 export const LoginForm: FC<LoginFormProps> = ({ ...props }) => {
     const { t } = useTranslation();
-
     const {
         showPassword,
         setShowPassword,
@@ -34,16 +34,9 @@ export const LoginForm: FC<LoginFormProps> = ({ ...props }) => {
         disableLogin,
     } = useLoginState(passwordValidationConfig);
 
-    function handleLogin() {
-        // First revalidate rules
-        if (
-            !Validator.emailValidation(email) ||
-            !Validator.passwordValidation(password, passwordValidationConfig)
-        )
-            return;
-        console.log({ email, password });
-    }
+    const { authenticatedUser, login } = useAuth();
 
+    console.log({ authenticatedUser });
     return (
         <Container>
             <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -105,7 +98,7 @@ export const LoginForm: FC<LoginFormProps> = ({ ...props }) => {
                 <div className="action-btn-div">
                     <Button
                         className="action-btn"
-                        onClick={handleLogin}
+                        onClick={() => login(email, password)}
                         disabled={disableLogin}
                     >
                         {t("login_btn")}

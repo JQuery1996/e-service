@@ -4,3 +4,6 @@ export * from "./starRate";
 export * from "./input";
 export * from "./fileDropZone";
 export * from "./textarea";
+export * from "./select";
+export * from "./service-card-chip";
+export * from "./pagination";

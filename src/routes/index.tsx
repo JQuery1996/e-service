@@ -1,3 +1,4 @@
+import { PageNotFound } from "pages";
 import { useRoutes } from "react-router-dom";
 
 // routes
@@ -7,5 +8,5 @@ import AuthenticationRoutes from "./PublicRoutes";
 // ==============================|| ROUTING RENDER ||============================== //
 
 export default function Routes() {
-  return useRoutes([MainRoutes, AuthenticationRoutes]);
+    return useRoutes([MainRoutes, AuthenticationRoutes]);
 }

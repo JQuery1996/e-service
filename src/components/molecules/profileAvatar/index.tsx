@@ -14,10 +14,11 @@ import useMenuToggle from "utils/hooks/useMenuToggle";
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import "../../../assets/css/main.css";
-
+import { useAuth } from "utils/hooks/useAuth";
 export interface ProfileAvatarProps {}
 
 export const ProfileAvatar: FC<ProfileAvatarProps> = () => {
+    const { authenticatedUser, logout } = useAuth();
     //Hook for toggle menu
     const {
         anchorEl: anchorElUser,
@@ -53,8 +54,10 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = () => {
                     direction="row"
                     spacing={0}
                 >
-                    <Typography color={"GrayText"}>أهلاً،</Typography>
-                    <Typography color="primary">محمد</Typography>
+                    <Typography color={"GrayText"}>{t("welcome")}. </Typography>
+                    <Typography color="primary">
+                        {authenticatedUser!.username}
+                    </Typography>
                 </Stack>
                 <ExpandMoreIcon
                     sx={{ display: { xs: "none", md: "inherit" } }}
@@ -82,10 +85,14 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = () => {
                 {settings.map(({ name, path, sx, icon }: settingNav) => (
                     <MenuItem
                         key={name}
-                        onClick={() => {
-                            navigate(path);
-                            handleCloseMenu();
-                        }}
+                        onClick={
+                            name === "logout"
+                                ? logout
+                                : () => {
+                                      navigate(path);
+                                      handleCloseMenu();
+                                  }
+                        }
                         sx={sx}
                     >
                         <ListItemIcon>{icon}</ListItemIcon>

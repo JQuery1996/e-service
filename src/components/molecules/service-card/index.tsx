@@ -47,7 +47,7 @@ export const ServiceCard: FC<IServiceCard> = ({
 
     const handleOpenService = (serviceId: number) => {
         navigation(`/service/${serviceId}`, {
-            state: { category, subCategory, service },
+            state: { service },
         });
     };
 

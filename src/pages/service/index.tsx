@@ -1,27 +1,54 @@
+// import { ServiceTemplete } from "components/templetes";
+import { useAppDispatch } from "app/hooks";
 import { ServiceTemplete } from "components/templetes";
-import { Service } from "core/types";
-import { FC } from "react";
-import { useLocation } from "react-router";
+import { IService, Service, IForm } from "core/types";
+import { Loader } from "features/loader/Loader";
+import { FC, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { fetchServiceForm } from "utils/apis/form";
+import { fetchService } from "utils/apis/service";
+import { useLoader } from "utils/hooks/useLoader";
 
 export interface ServicePageProps {}
 
-const service: Service = {
-    name: "خدمة توصيل خضراوات من مصر الى دمشق",
-    category: "الفئة",
-    currency: "$",
-    details:
-        "سيت يتبيرسبايكياتيس يوندي أومنيس أستي ناتيس أيررور سيت فوليبتاتيم أكيسأنتييوم دولاريمكيو لايودانتيوم,توتام ريم أبيرأم,أيكيو أبسا كيواي أب أللو أنفينتوري فيرأتاتيس ايت كياسي أرشيتيكتو بيتاي فيتاي ديكاتا سيونت أكسبليكابو. نيمو أنيم أبسام فوليوباتاتيم كيواي فوليوبتاس سايت أسبيرناتشر أيوت أودايت أيوت فيوجايت, سيد كيواي كونسيكيونتشر ماجناي سيت يتبيرسبايكياتيس يوندي أومنيس أستي ناتيس أيررور سيت فوليبتاتيم أكيسأنتييوم دولاريمكيو لايودانتيوم,توتام ريم أبيرأم,أيكيو أبسا كيواي أب أللو أنفينتوري فيرأتاتيس ايت كياسي أرشيتيكتو بيتاي فيتاي ديكاتا سيونت أكسبليكابو. نيمو أنيم أبسام فوليوباتاتيم كيواي فوليوبتاس سايت أسبيرناتشر أيوت أودايت أيوت فيوجايت, سيد كيواي كونسيكيونتشر ماجناي",
-    price: 5,
-    gallery: [
-        { image: "https://picsum.photos/400", title: "title" },
-        { image: "https://picsum.photos/400" },
-        { image: "https://picsum.photos/400" },
-    ],
-};
-
 const ServicePage: FC<ServicePageProps> = () => {
-    const { state } = useLocation();
-    console.log(state);
-    return <ServiceTemplete service={service} />;
+    const [currentService, setCurrentService] = useState<IService>(
+        {} as IService,
+    );
+    const [currentServiceForm, setCurrentServiceForm] = useState<IForm | null>(
+        null,
+    );
+    const { id: serviceId } = useParams();
+    const dispatch = useAppDispatch();
+    const { setLoadingState } = useLoader();
+
+    useEffect(() => {
+        async function loadService() {
+            try {
+                dispatch(setLoadingState(true));
+                const responsedService = await fetchService(+serviceId!);
+                const responsedServiceForm = await fetchServiceForm(
+                    +serviceId!,
+                );
+                setCurrentService(responsedService);
+                setCurrentServiceForm(responsedServiceForm);
+                dispatch(setLoadingState(false));
+            } catch (error) {
+                console.log(error);
+                dispatch(setLoadingState(false));
+            }
+        }
+        loadService();
+    }, [dispatch, serviceId, setLoadingState]);
+
+    console.log({ currentServiceForm });
+    return !currentService.Id ? (
+        <Loader />
+    ) : (
+        <ServiceTemplete
+            service={currentService}
+            serviceForm={currentServiceForm}
+        />
+    );
 };
 export default ServicePage;

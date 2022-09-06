@@ -1,0 +1,8 @@
+export enum ENUM_INPUT_TYPE_MAPPER {
+    NUMBER_FIELD = 0,
+    TEXT_FIELD = 1,
+    TEXT_AREA = 2,
+    RADIO_BUTTON = 3,
+    SINGLE_SELECT = 4,
+    MULTIPLE_SELECT = 5,
+}

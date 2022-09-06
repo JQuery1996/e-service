@@ -7,3 +7,5 @@ export * from "./textarea";
 export * from "./select";
 export * from "./service-card-chip";
 export * from "./pagination";
+export * from "./tabs";
+export * from "./error-message";

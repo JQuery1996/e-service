@@ -56,5 +56,6 @@
     "enter": "Enter",
     "category": "Category",
     "subCategory": "SubCategory",
-    "show": "show"
+    "show": "show",
+    "add_request": "Add Request"
 }

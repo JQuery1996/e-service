@@ -34,3 +34,8 @@ export async function fetchServicesByCountry(
         services: response.data.Data.Result as IService[],
     };
 }
+
+export async function fetchService(serviceId: number) {
+    const response = await ReactAxios.get(listOfServicesUrl + `/${serviceId}`);
+    return response.data.Data;
+}

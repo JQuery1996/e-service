@@ -1,110 +1,185 @@
 import { FC } from "react";
 import {
     Container,
-    Stack,
-    Typography,
     Grid,
-    Button,
     Link,
     Breadcrumbs,
+    Stack,
+    Typography,
+    Divider,
+    Card,
+    CardHeader,
+    IconButton,
+    CardContent,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import { Service } from "core/types";
-import { RequestService } from "components/molecules/requestService";
-import { Details, InformationList } from "components/molecules";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+
+import { IForm, IService } from "core/types";
 import { useTranslation } from "react-i18next";
-import "../../../assets/css/service-details.css";
-import { Home as HomeIcon } from "@mui/icons-material";
+
+import {
+    Home as HomeIcon,
+    AddShoppingCart as AddShoppingCardIcon,
+    ArrowLeft as ArrowLeftIcon,
+    LightbulbOutlined as LightbulbOutlinedIcon,
+    ApprovalOutlined as ApprovalOutlinedIcon,
+    Language as LanguageIcon,
+} from "@mui/icons-material";
+
+import { Tabs } from "components/atoms";
+import { ServiceForm } from "./service-form";
 
 export interface ServiceTempleteProps {
-    service: Service;
+    service: IService;
+    serviceForm: IForm | null;
 }
 
-export const ServiceTemplete: FC<ServiceTempleteProps> = (props) => {
-    const { service } = props;
-    const { name, category, price, currency, details } = service;
+export const ServiceTemplete: FC<ServiceTempleteProps> = ({
+    service,
+    serviceForm,
+}) => {
     const { t } = useTranslation();
     const breadcrumbs = [
         <Link
-            key="_1"
+            key="key_1"
             underline="hover"
-            sx={{ display: "flex", alignItems: "center" }}
-            color="inherit"
-            href="/"
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                fontWeight: "bold",
+                fontSize: 14,
+            }}
+            color="primary"
+            href="#"
         >
             <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-            الفئة الرئيسية
+            {service.Category.Name_L2}
         </Link>,
         <Link
-            key="_2"
+            key="key_2"
             underline="hover"
-            sx={{ display: "flex", alignItems: "center" }}
-            color="inherit"
-            href="/"
+            sx={{
+                display: "flex",
+                alignItems: "center",
+                fontWeight: "bold",
+                fontSize: 14,
+            }}
+            color="secondary"
+            href="#"
         >
             <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-            الفئة الفرعية
+            {service.SubCategory.Name_L2}
         </Link>,
     ];
-
     return (
-        <Grid container className="service-details-container">
-            <Grid item xs={12}>
-                <Breadcrumbs
-                    separator="›"
-                    aria-label="breadcrumb"
-                    className="breadcrumbs"
-                >
-                    {breadcrumbs}
-                </Breadcrumbs>
-            </Grid>
-
-            <Grid item md={9} xs={11} sm={11}>
-                <Stack spacing={3}>
-                    <Stack
-                        direction="row"
-                        justifyContent="space-between"
-                        alignItems="center"
+        <Container maxWidth="xl">
+            <Grid
+                container
+                className="service-details-container"
+                sx={{ mt: 16 }}
+            >
+                <Grid item xs={12}>
+                    <Breadcrumbs
+                        separator="›"
+                        aria-label="breadcrumb"
+                        className="breadcrumbs"
                     >
-                        <Box>
-                            <Typography className="service-name-details">
-                                {name}
-                            </Typography>
-                        </Box>
-                        {/* <RequestService price={price} currency={currency} /> */}
+                        {breadcrumbs}
+                    </Breadcrumbs>
+                </Grid>
+                <Grid item md={9} xs={11} sm={11} sx={{ mt: 2 }}>
+                    <Stack spacing={3} direction="column">
+                        <Stack
+                            direction="row"
+                            spacing={2}
+                            alignItems="center"
+                            alignContent="center"
+                        >
+                            <AddShoppingCardIcon color="primary" />
+                            <Divider
+                                orientation="vertical"
+                                flexItem
+                                color="primary"
+                            />
+
+                            <Stack direction="column" spacing={1}>
+                                <Stack
+                                    direction="row"
+                                    spacing={1}
+                                    alignItems="center"
+                                    alignContent="center"
+                                >
+                                    <ArrowLeftIcon />
+                                    <Typography variant="h4">
+                                        {service.Name_L2}
+                                    </Typography>
+                                </Stack>
+
+                                <Stack
+                                    direction="row"
+                                    spacing={1}
+                                    alignItems="center"
+                                    alignContent="center"
+                                >
+                                    <ArrowLeftIcon />
+                                    <Typography variant="subtitle2">
+                                        {service.Name_L1}
+                                    </Typography>
+                                </Stack>
+                            </Stack>
+                        </Stack>
                     </Stack>
 
-                    <LazyLoadImage
-                        height="400"
-                        src="https://picsum.photos/300"
-                        alt="green iguana"
-                        effect="opacity"
-                        style={{
-                            display: "block",
-                            backgroundSize: "cover",
-                            backgroundRepeat: "no-repeat",
-                            backgroundPosition: "center",
-                            width: "100%",
-                            objectFit: "cover",
-                        }}
-                    />
-                    <div className="service-price-details">
-                        <Typography>
-                            {t("price")}{" "}
-                            <span className="bule-color service-price">
-                                {price} {currency}
-                            </span>
-                        </Typography>
-
-                        <Typography>5 أيام</Typography>
-                    </div>
-                    <Button className="buy-service-btn">
-                        {t("buy_service")}
-                    </Button>
-                    <Details details={details} title="تفاصيل الخدمة" />
-                </Stack>
+                    <Stack direction="column" spacing={4} sx={{ mt: 4 }}>
+                        <Tabs
+                            listOfTabs={[
+                                {
+                                    icon: <LightbulbOutlinedIcon />,
+                                    label: "تفاصيل الخدمة",
+                                    element: (
+                                        <Typography>
+                                            {service.Description_L2}
+                                        </Typography>
+                                    ),
+                                },
+                            ]}
+                        />
+                    </Stack>
+                </Grid>
             </Grid>
-        </Grid>
+            {serviceForm && serviceForm.Fields.length > 0 && (
+                <Container sx={{ mt: 8 }}>
+                    <Card elevation={10}>
+                        <CardHeader
+                            avatar={
+                                <ApprovalOutlinedIcon
+                                    color="primary"
+                                    sx={{ fontWeight: "bold" }}
+                                />
+                            }
+                            title={t("add_request")}
+                            titleTypographyProps={{
+                                fontWeight: "bold",
+                                variant: "body1",
+                            }}
+                            subheader={service.Name_L2}
+                            action={
+                                <IconButton sx={{ mt: 1 }}>
+                                    <LanguageIcon
+                                        color="info"
+                                        sx={{ cursor: "pointer" }}
+                                    />
+                                </IconButton>
+                            }
+                            style={{ fontWeight: "bold" }}
+                        />
+                        <CardContent>
+                            {serviceForm && (
+                                <ServiceForm serviceForm={serviceForm} />
+                            )}
+                        </CardContent>
+                    </Card>
+                </Container>
+            )}
+        </Container>
     );
 };

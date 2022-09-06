@@ -12,7 +12,7 @@ interface IPasswordExpression {
 
 export class Validator {
     static nonEmptyStringValidation(field: string) {
-        return field && field.trim().length > 0;
+        return Boolean(field && field.trim().length > 0);
     }
     static emailValidation(email: string) {
         return email && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);

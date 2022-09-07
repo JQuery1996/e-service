@@ -13,7 +13,7 @@ import {
     CardContent,
 } from "@mui/material";
 
-import { IForm, IService } from "core/types";
+import { IForm, IService, ICurrency } from "core/types";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -31,11 +31,13 @@ import { ServiceForm } from "./service-form";
 export interface ServiceTempleteProps {
     service: IService;
     serviceForm: IForm | null;
+    currencies: ICurrency[];
 }
 
 export const ServiceTemplete: FC<ServiceTempleteProps> = ({
     service,
     serviceForm,
+    currencies,
 }) => {
     const { t } = useTranslation();
     const breadcrumbs = [
@@ -146,39 +148,49 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
                     </Stack>
                 </Grid>
             </Grid>
+
             {serviceForm && serviceForm.Fields.length > 0 && (
-                <Container sx={{ mt: 8 }}>
-                    <Card elevation={10}>
-                        <CardHeader
-                            avatar={
-                                <ApprovalOutlinedIcon
-                                    color="primary"
-                                    sx={{ fontWeight: "bold" }}
+                <Card elevation={24} sx={{ mt: 4 }}>
+                    <CardHeader
+                        avatar={
+                            <ApprovalOutlinedIcon
+                                color="primary"
+                                sx={{ fontWeight: "bold" }}
+                            />
+                        }
+                        title={
+                            <Typography
+                                variant="h5"
+                                color="primary"
+                                sx={{ fontWeight: "bold" }}
+                            >
+                                {t("add_request")}
+                            </Typography>
+                        }
+                        titleTypographyProps={{
+                            fontWeight: "bold",
+                            variant: "body1",
+                        }}
+                        subheader={service.Name_L2}
+                        action={
+                            <IconButton sx={{ mt: 1 }}>
+                                <LanguageIcon
+                                    color="info"
+                                    sx={{ cursor: "pointer" }}
                                 />
-                            }
-                            title={t("add_request")}
-                            titleTypographyProps={{
-                                fontWeight: "bold",
-                                variant: "body1",
-                            }}
-                            subheader={service.Name_L2}
-                            action={
-                                <IconButton sx={{ mt: 1 }}>
-                                    <LanguageIcon
-                                        color="info"
-                                        sx={{ cursor: "pointer" }}
-                                    />
-                                </IconButton>
-                            }
-                            style={{ fontWeight: "bold" }}
-                        />
-                        <CardContent>
-                            {serviceForm && (
-                                <ServiceForm serviceForm={serviceForm} />
-                            )}
-                        </CardContent>
-                    </Card>
-                </Container>
+                            </IconButton>
+                        }
+                        style={{ fontWeight: "bold" }}
+                    />
+                    <CardContent>
+                        {serviceForm && (
+                            <ServiceForm
+                                serviceForm={serviceForm}
+                                currencies={currencies}
+                            />
+                        )}
+                    </CardContent>
+                </Card>
             )}
         </Container>
     );

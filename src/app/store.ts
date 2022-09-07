@@ -1,9 +1,10 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 
-import { authUserReducer } from "../features/auth-user/authUserSlice";
-import { countryReducer } from "../features/country/countrySlice";
-import { loaderReducer } from "../features/loader/loaderSlice";
+import { authUserReducer } from "features/auth-user/authUserSlice";
+import { countryReducer } from "features/country/countrySlice";
+import { loaderReducer } from "features/loader/loaderSlice";
+import { currencyReducer } from "features/currency/curreny-slice";
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         user: authUserReducer,
         country: countryReducer,
         loader: loaderReducer,
+        currency: currencyReducer,
     },
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.

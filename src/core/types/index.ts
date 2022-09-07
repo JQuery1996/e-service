@@ -10,3 +10,4 @@ export * from "./request";
 export * from "./additonal-service";
 export * from "./charge";
 export * from "./input-mapper";
+export * from "./currency";

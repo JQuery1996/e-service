@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
 import { Validator } from "utils/validation";
+import { ErrorMessage } from "components/atoms";
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -81,9 +82,13 @@ export function buildFormFields({
                         required={Field.Required}
                         error={Validator.nonEmptyStringValidation(FieldValue)}
                         helperText={
-                            Validator.nonEmptyStringValidation(FieldValue)
-                                ? ""
-                                : i18n.t("field_is_required")
+                            Validator.nonEmptyStringValidation(FieldValue) ? (
+                                ""
+                            ) : (
+                                <ErrorMessage
+                                    message={i18n.t("field_is_required")}
+                                />
+                            )
                         }
                         variant={VARIANT}
                     />
@@ -98,9 +103,13 @@ export function buildFormFields({
                         required={Field.Required}
                         error={!Validator.nonEmptyStringValidation(FieldValue)}
                         helperText={
-                            Validator.nonEmptyStringValidation(FieldValue)
-                                ? ""
-                                : i18n.t("field_is_required")
+                            Validator.nonEmptyStringValidation(FieldValue) ? (
+                                ""
+                            ) : (
+                                <ErrorMessage
+                                    message={i18n.t("field_is_required")}
+                                />
+                            )
                         }
                         variant={VARIANT}
                     />
@@ -115,9 +124,13 @@ export function buildFormFields({
                         variant={TEXTAREAVARIANT}
                         error={!Validator.nonEmptyStringValidation(FieldValue)}
                         helperText={
-                            Validator.nonEmptyStringValidation(FieldValue)
-                                ? ""
-                                : i18n.t("field_is_required")
+                            Validator.nonEmptyStringValidation(FieldValue) ? (
+                                ""
+                            ) : (
+                                <ErrorMessage
+                                    message={i18n.t("field_is_required")}
+                                />
+                            )
                         }
                     />
                 );
@@ -151,9 +164,9 @@ export function buildFormFields({
                             ))}
                         </RadioGroup>
                         {!Validator.nonEmptyStringValidation(FieldValue) && (
-                            <FormHelperText sx={{ color: "error.main" }}>
-                                {i18n.t("field_is_required")}
-                            </FormHelperText>
+                            <ErrorMessage
+                                message={i18n.t("field_is_required")}
+                            />
                         )}
                     </FormControl>
                 );

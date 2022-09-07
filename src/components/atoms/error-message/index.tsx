@@ -1,6 +1,6 @@
 import { NewReleases as NewReleasesIcon } from "@mui/icons-material";
 import { Stack, Typography } from "@mui/material";
-import { StackProps, typographyVariant } from "@mui/system";
+import { StackProps } from "@mui/system";
 
 interface IErrorMessage extends StackProps {
     fontSize?: number;
@@ -41,7 +41,7 @@ export function ErrorMessage({
     ...props
 }: IErrorMessage) {
     return (
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row" spacing={1} component="span">
             <NewReleasesIcon
                 color={color ?? "error"}
                 sx={{ fontSize: fontSize ?? 20 }}

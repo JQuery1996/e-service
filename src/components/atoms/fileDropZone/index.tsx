@@ -1,18 +1,19 @@
 import { Stack, SvgIcon, Typography } from "@mui/material";
 import { Box, BoxProps } from "@mui/system";
-import { Dispatch, FC, SetStateAction, useCallback, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useTranslation } from "react-i18next";
 import { ReactComponent as sendSquare } from "assets/images/send-square.svg";
 import { CSSProperties } from "react";
-
-import { IDocumentType, IRequest } from "core/types";
+import { IDocumentType } from "core/types";
 import { ErrorMessage } from "../error-message";
 import { useAuth } from "utils/hooks/useAuth";
 import ReactAxios from "utils/axios";
-import { useLoader } from "utils/hooks/useLoader";
-import { useAppDispatch } from "app/hooks";
+import { Loader } from "features/loader/Loader";
+import { notify } from "utils/toastify-notification";
+// FETCH_UPLOAD_URL_FROM_ENV_FILE
 const UPLOAD_FILE_URL = process.env.REACT_APP_UPLOAD_FILE!;
+
 // Styles For Preview File
 const thumbsContainer: CSSProperties = {
     display: "flex",
@@ -50,22 +51,32 @@ const img: CSSProperties = {
 
 export interface FileDropZoneProps extends BoxProps {
     document?: IDocumentType;
-    serviceRequest?: IRequest;
-    setServiceRequest?: Dispatch<SetStateAction<IRequest>>;
+    uploadedFiles?: { DocumentType: number; Id: number }[];
+    setUploadedFiles?: Dispatch<
+        SetStateAction<{ DocumentType: number; Id: number }[]>
+    >;
 }
 
 export const FileDropZone: FC<FileDropZoneProps> = ({
     document,
-    serviceRequest,
-    setServiceRequest,
+    uploadedFiles,
+    setUploadedFiles,
     ...props
 }: FileDropZoneProps) => {
-    const dispatch = useAppDispatch();
     const { authenticatedUser } = useAuth();
-    const { setLoadingState } = useLoader();
     //Hooks
     const [file, setFile] = useState<any>(null);
-    const onDrop = (acceptedFiles: any) => {
+    const [fileLoader, setFileLoader] = useState<boolean>(false);
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        accept: ["application/pdf", "image/png", "image/jpeg", "image/jpg"],
+        maxFiles: 1,
+        maxSize: 5e6,
+        onDrop,
+    });
+    const { t } = useTranslation();
+
+    async function onDrop(acceptedFiles: any) {
         acceptedFiles.forEach((acceptedFile: any) => {
             setFile(
                 Object.assign(acceptedFile, {
@@ -88,53 +99,62 @@ export const FileDropZone: FC<FileDropZoneProps> = ({
                 formData.append("userId", authenticatedUser!.Id);
 
                 try {
-                    if (!setServiceRequest) return null;
-                    dispatch(setLoadingState(true));
+                    if (!setUploadedFiles) return null;
+                    setFileLoader(true);
                     const responsedDocument = await ReactAxios.post(
                         UPLOAD_FILE_URL,
                         formData,
                     );
-                    if (responsedDocument.status === 200) {
+                    if (responsedDocument.data.Code === 200) {
+                        notify("success", t("upload_file_success"));
                         // success case
-                        setServiceRequest((currentServiceRequest) => ({
-                            ...currentServiceRequest,
-                            documentsIds: [
-                                ...currentServiceRequest.documentsIds,
-                                responsedDocument.data.Data.Id,
-                            ],
-                        }));
+                        setUploadedFiles((currentUploadedFiles) => {
+                            const index = currentUploadedFiles.findIndex(
+                                (uploadedFile) =>
+                                    uploadedFile.DocumentType ===
+                                    responsedDocument.data.Data.DocumentType.Id,
+                            );
+                            if (index === -1)
+                                // first time uploaded this type of documents
+                                return [
+                                    ...currentUploadedFiles,
+                                    {
+                                        DocumentType: document!.Id,
+                                        Id: responsedDocument.data.Data.Id,
+                                    },
+                                ];
+                            else
+                                return currentUploadedFiles.map(
+                                    (uploadedFile) =>
+                                        uploadedFile.DocumentType ===
+                                        document!.Id
+                                            ? {
+                                                  DocumentType: document!.Id,
+                                                  Id: responsedDocument.data
+                                                      .Data.Id,
+                                              }
+                                            : uploadedFile,
+                                );
+                        });
                     }
-                    dispatch(setLoadingState(false));
+                    setFileLoader(false);
                 } catch (error) {
-                    dispatch(setLoadingState(false));
+                    setFileLoader(false);
+                    setFile(null);
+                    notify("error", t("upload_file_failed"));
                     console.log(error);
                 }
-                const binaryStr = reader.result;
-                console.log(binaryStr);
             };
             reader.readAsArrayBuffer(acceptedFile);
         });
-    };
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({
-        accept: ["application/pdf", "image/png", "image/jpeg"],
-        maxFiles: 1,
-        onDrop,
-    });
-    const { t } = useTranslation();
+    }
 
+    console.log("File Type is : ", file?.type);
     const thumbs: any = file && (
         <div style={thumb} key={file.name}>
             <div style={thumbInner}>
-                {/^image/.test(file.type) ? (
-                    <img
-                        src={file.preview}
-                        style={img}
-                        // Revoke data uri after image is loaded
-                        onLoad={() => {
-                            URL.revokeObjectURL(file.preview);
-                        }}
-                        alt="file Preview"
-                    />
+                {file.type.split("/")[0] === "image" ? (
+                    <img src={file.preview} style={img} alt="file Preview" />
                 ) : (
                     <iframe
                         title={file.name}
@@ -153,41 +173,47 @@ export const FileDropZone: FC<FileDropZoneProps> = ({
     return (
         <Box {...getRootProps()} {...props}>
             <input {...getInputProps()} />
-            <Box
-                sx={{
-                    border: !isDragActive
-                        ? "1px solid #DADFE4"
-                        : "1px dashed #DADFE4",
-                    borderRadius: "4px",
-                    p: 2,
-                    bgcolor: "background.default",
-                    cursor: "pointer",
-                    width: "100%",
-                }}
-            >
-                <Stack direction="column" spacing={1}>
-                    <SvgIcon
-                        sx={{ height: 20, width: 20 }}
-                        component={sendSquare}
-                        inheritViewBox
-                    />
-                    {document && (
-                        <Typography variant="h6" color="primary">
-                            {document.Name_L2}
-                        </Typography>
-                    )}
-                    <Stack direction="row" spacing={1}>
-                        <Typography variant="body2">
-                            {t("drag_file")}
-                        </Typography>
-                        <Typography variant="body2" color="primary">
-                            {t("browse_files")}
-                        </Typography>
+            {fileLoader ? (
+                <Loader specific />
+            ) : (
+                <Box
+                    sx={{
+                        border: !isDragActive
+                            ? "1px solid #DADFE4"
+                            : "1px dashed #DADFE4",
+                        borderRadius: "4px",
+                        p: 2,
+                        bgcolor: "background.default",
+                        cursor: "pointer",
+                        width: "100%",
+                    }}
+                >
+                    <Stack direction="column" spacing={1}>
+                        <SvgIcon
+                            sx={{ height: 20, width: 20 }}
+                            component={sendSquare}
+                            inheritViewBox
+                        />
+                        {document && (
+                            <Typography variant="h6" color="primary">
+                                {document.Name_L2}
+                            </Typography>
+                        )}
+                        <Stack direction="row" spacing={1}>
+                            <Typography variant="body2">
+                                {t("drag_file")}
+                            </Typography>
+                            <Typography variant="body2" color="primary">
+                                {t("browse_files")}
+                            </Typography>
+                        </Stack>
+                        {!file && (
+                            <ErrorMessage message={t("field_is_required")} />
+                        )}
                     </Stack>
-                    {!file && <ErrorMessage message={t("field_is_required")} />}
-                </Stack>
-                <aside style={thumbsContainer}>{thumbs}</aside>
-            </Box>
+                    <aside style={thumbsContainer}>{thumbs}</aside>
+                </Box>
+            )}
         </Box>
     );
 };

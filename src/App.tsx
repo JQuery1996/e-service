@@ -29,7 +29,7 @@ function App() {
                         <Routes />
                     </Provider>
                 </div>
-                <ToastContainer />
+                <ToastContainer rtl />
             </CacheProvider>
         </ThemeProvider>
     );

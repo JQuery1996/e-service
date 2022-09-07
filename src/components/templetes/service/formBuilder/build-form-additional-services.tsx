@@ -1,23 +1,43 @@
-import { IAdditionalService, IRequest } from "core/types";
+import { IAdditionalService, IRequest, ICurrency } from "core/types";
 import { Dispatch, SetStateAction } from "react";
-import { Grid, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import {
+    Grid,
+    Checkbox,
+    FormControlLabel,
+    Typography,
+    Chip,
+} from "@mui/material";
 import {
     BookmarkBorder as BookmarkBorderIcon,
     Bookmark as BookmarkIcon,
 } from "@mui/icons-material";
+import { Stack } from "@mui/system";
 
 const ariaLabel = { inputProps: { "aria-label": "Checkbox demo" } };
 
+function getPrice(
+    additionalService: IAdditionalService,
+    currencies: ICurrency[],
+) {
+    // this will return amount/name like "10 $"
+    // first we need to get the charge name
+    const CODE = currencies.find(
+        (currency) => currency.id === additionalService.Id,
+    )!.code;
+    return `${additionalService.charges[0].Amount} ${CODE}`;
+}
 export function buildFormAdditionalServices({
     additionalServices,
     serviceRequest,
     setServiceRequest,
+    currencies,
 }: {
     additionalServices: IAdditionalService[];
     serviceRequest: IRequest;
     setServiceRequest: Dispatch<SetStateAction<IRequest>>;
+    currencies: ICurrency[];
 }) {
-    console.log(serviceRequest);
+    console.log({ additionalServices, serviceRequest });
     function isChecked(Id: number) {
         return serviceRequest.additionalService.some(
             (additionalService) => additionalService.Id === Id,
@@ -79,12 +99,27 @@ export function buildFormAdditionalServices({
                             />
                         }
                         label={
-                            <Typography
-                                variant="body1"
-                                sx={{ fontWeight: "bold" }}
-                            >
-                                {additionalService.Name_L2}
-                            </Typography>
+                            <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
+                                <Typography
+                                    variant="body1"
+                                    sx={{ fontWeight: "bold" }}
+                                >
+                                    {additionalService.Name_L2}
+                                </Typography>
+                                <Chip
+                                    label={getPrice(
+                                        additionalService,
+                                        currencies,
+                                    )}
+                                    variant="filled"
+                                    sx={{
+                                        borderRadius: 1,
+                                        fontWeight: "bold",
+                                        direction: "rtl",
+                                    }}
+                                    color="secondary"
+                                />
+                            </Stack>
                         }
                         style={{ fontWeight: "bold" }}
                     />

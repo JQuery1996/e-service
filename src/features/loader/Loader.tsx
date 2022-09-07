@@ -1,7 +1,7 @@
 // material ui imports
 import { Container } from "@mui/material";
 
-export function Loader() {
+export function Loader({ specific }: { specific?: boolean }) {
     return (
         <Container
             maxWidth="lg"
@@ -10,12 +10,14 @@ export function Loader() {
                 justifyContent: "center",
                 alignItems: "center",
                 alignContent: "center",
-                position: "absolute",
-                top: 0,
-                left: 0,
-                minWidth: "100%",
-                height: "100vh",
-                backgroundColor: "transparent",
+                ...(!specific && {
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    minWidth: "100%",
+                    height: "100vh",
+                    backgroundColor: "transparent",
+                }),
             }}
         >
             <img

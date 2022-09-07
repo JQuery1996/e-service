@@ -57,5 +57,7 @@
     "category": "الفئه",
     "subCategory": "الفئه الفرعيه",
     "show": "عرض",
-    "add_request": "تقديم طلب"
+    "add_request": "تقديم طلب",
+    "upload_file_failed": "حذث خطا أثناء رفع الملف يرجى المحاولة مرة اخرى",
+    "upload_file_success": "تم رفع الملف بنجاح"
 }

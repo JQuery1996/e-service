@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
+import { RootState } from "app/store";
 import type { ICountry } from "core/types/country";
 
 const localStorageCountry = localStorage.getItem(

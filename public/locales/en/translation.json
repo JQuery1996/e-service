@@ -57,5 +57,7 @@
     "category": "Category",
     "subCategory": "SubCategory",
     "show": "show",
-    "add_request": "Add Request"
+    "add_request": "Add Request",
+    "upload_file_failed": "an error occurred while uplaoding the file, please try again",
+    "upload_file_success": "file uploaded successfully"
 }

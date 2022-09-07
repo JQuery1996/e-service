@@ -1,14 +1,21 @@
 import { Chip, Divider, Grid } from "@mui/material";
-import { IForm, IRequest, ENUM_INPUT_TYPE_MAPPER } from "core/types";
-import { useState } from "react";
+import { IForm, IRequest, ENUM_INPUT_TYPE_MAPPER, ICurrency } from "core/types";
+import { useState, useEffect } from "react";
 import { buildFormAdditionalServices } from "./formBuilder/build-form-additional-services";
 import { buildFormDocuments } from "./formBuilder/build-form-documents";
 import { buildFormFields } from "./formBuilder/build-form-fields";
 interface IServiceForm {
     serviceForm: IForm;
+    currencies: ICurrency[];
 }
-export function ServiceForm({ serviceForm }: IServiceForm) {
+export function ServiceForm({ serviceForm, currencies }: IServiceForm) {
     const initialRequestForm = {} as IRequest;
+    const [uploadedFiles, setUploadedFiles] = useState<
+        {
+            DocumentType: number;
+            Id: number;
+        }[]
+    >([]);
 
     // Fields Section
     initialRequestForm.Fields = serviceForm.Fields.map(
@@ -25,7 +32,18 @@ export function ServiceForm({ serviceForm }: IServiceForm) {
     const [serviceRequest, setServiceRequest] =
         useState<IRequest>(initialRequestForm);
 
+    useEffect(() => {
+        setServiceRequest((currentServiceRequest) => ({
+            ...currentServiceRequest,
+            documentsIds: uploadedFiles.map((uploadedFile) => uploadedFile.Id),
+        }));
+    }, [setServiceRequest, uploadedFiles]);
+
+    console.log("From Service Form");
+    console.log("Service From is ");
     console.log({ serviceForm });
+    console.log("uplaodedFiles is ");
+    console.log(uploadedFiles);
     return (
         <>
             <Divider textAlign="left" sx={{ mb: 4 }}>
@@ -65,6 +83,7 @@ export function ServiceForm({ serviceForm }: IServiceForm) {
                     additionalServices: serviceForm.AdditionalServices,
                     serviceRequest,
                     setServiceRequest,
+                    currencies,
                 })}
             </Grid>
 
@@ -82,8 +101,8 @@ export function ServiceForm({ serviceForm }: IServiceForm) {
             <Grid container spacing={2}>
                 {buildFormDocuments({
                     documents: serviceForm.DocumentTypes,
-                    serviceRequest,
-                    setServiceRequest,
+                    uploadedFiles,
+                    setUploadedFiles,
                 })}
             </Grid>
         </>

@@ -96,7 +96,7 @@ export const FileDropZone: FC<FileDropZoneProps> = ({
                 const formData = new FormData();
                 formData.append("documentImage", acceptedFile);
                 formData.append("DocumentTypeId", document!.Id.toString());
-                formData.append("userId", authenticatedUser!.Id);
+                formData.append("userId", authenticatedUser!.Id.toString());
 
                 try {
                     if (!setUploadedFiles) return null;

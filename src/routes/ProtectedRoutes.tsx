@@ -12,7 +12,7 @@ const ReqestedServices = lazy(() => import("pages/requestedServices"));
 const SelectPayment = lazy(() => import("pages/selectPayment"));
 const PaymentResult = lazy(() => import("pages/paymentResult"));
 const BuyService = lazy(() => import("pages/buyService"));
-
+const Request = lazy(() => import("pages/request"));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const ProtectedRoutes = {
@@ -52,6 +52,11 @@ const ProtectedRoutes = {
             path: "/service/requested",
             expect: true,
             element: <ReqestedServices />,
+        },
+        {
+            path: "/service/requested/:id",
+            expect: true,
+            element: <Request />,
         },
         {
             path: "/service/result",

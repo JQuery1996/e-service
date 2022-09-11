@@ -10,3 +10,4 @@ export * from "./selectCountry";
 export * from "./selectPayment";
 export * from "./paymentResult";
 export * from "./buyService";
+export * from "./request";

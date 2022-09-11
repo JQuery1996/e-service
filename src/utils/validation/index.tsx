@@ -11,6 +11,14 @@ interface IPasswordExpression {
 }
 
 export class Validator {
+    static required(value: any) {
+        return (
+            value &&
+            (typeof value === "string"
+                ? this.nonEmptyStringValidation(value)
+                : true)
+        );
+    }
     static nonEmptyStringValidation(field: string) {
         return Boolean(field && field.trim().length > 0);
     }

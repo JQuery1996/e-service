@@ -1,49 +1,29 @@
 import { Chip, Divider, Grid } from "@mui/material";
-import { IForm, IRequest, ENUM_INPUT_TYPE_MAPPER, ICurrency } from "core/types";
-import { useState, useEffect } from "react";
+import { IForm, IRequest, ICurrency, IUploadFile } from "core/types";
+import { Dispatch, SetStateAction } from "react";
 import { buildFormAdditionalServices } from "./formBuilder/build-form-additional-services";
 import { buildFormDocuments } from "./formBuilder/build-form-documents";
 import { buildFormFields } from "./formBuilder/build-form-fields";
 interface IServiceForm {
     serviceForm: IForm;
     currencies: ICurrency[];
+    currentCurrency: ICurrency;
+    uploadedFiles: IUploadFile[];
+    setUploadedFiles: Dispatch<SetStateAction<IUploadFile[]>>;
+    serviceRequest: IRequest;
+    setServiceRequest: Dispatch<SetStateAction<IRequest>>;
+    perferredCurrencyId: number;
 }
-export function ServiceForm({ serviceForm, currencies }: IServiceForm) {
-    const initialRequestForm = {} as IRequest;
-    const [uploadedFiles, setUploadedFiles] = useState<
-        {
-            DocumentType: number;
-            Id: number;
-        }[]
-    >([]);
-
-    // Fields Section
-    initialRequestForm.Fields = serviceForm.Fields.map(
-        ({ Name_L1, Name_L2, Name_L3, Type }) => ({
-            title_L1: Name_L1,
-            title_L2: Name_L2,
-            title_L3: Name_L3,
-            value: ENUM_INPUT_TYPE_MAPPER.MULTIPLE_SELECT === Type ? [] : "",
-        }),
-    );
-    // Additional Services Section
-    initialRequestForm.additionalService = [];
-    initialRequestForm.documentsIds = [];
-    const [serviceRequest, setServiceRequest] =
-        useState<IRequest>(initialRequestForm);
-
-    useEffect(() => {
-        setServiceRequest((currentServiceRequest) => ({
-            ...currentServiceRequest,
-            documentsIds: uploadedFiles.map((uploadedFile) => uploadedFile.Id),
-        }));
-    }, [setServiceRequest, uploadedFiles]);
-
-    console.log("From Service Form");
-    console.log("Service From is ");
-    console.log({ serviceForm });
-    console.log("uplaodedFiles is ");
-    console.log(uploadedFiles);
+export function ServiceForm({
+    serviceForm,
+    currencies,
+    currentCurrency,
+    uploadedFiles,
+    setUploadedFiles,
+    serviceRequest,
+    setServiceRequest,
+    perferredCurrencyId,
+}: IServiceForm) {
     return (
         <>
             <Divider textAlign="left" sx={{ mb: 4 }}>
@@ -84,6 +64,8 @@ export function ServiceForm({ serviceForm, currencies }: IServiceForm) {
                     serviceRequest,
                     setServiceRequest,
                     currencies,
+                    perferredCurrencyId,
+                    currentCurrency,
                 })}
             </Grid>
 

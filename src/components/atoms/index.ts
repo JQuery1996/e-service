@@ -9,3 +9,4 @@ export * from "./service-card-chip";
 export * from "./pagination";
 export * from "./tabs";
 export * from "./error-message";
+export * from "./file-card";

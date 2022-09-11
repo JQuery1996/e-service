@@ -15,29 +15,21 @@ import { Stack } from "@mui/system";
 
 const ariaLabel = { inputProps: { "aria-label": "Checkbox demo" } };
 
-function getPrice(
-    additionalService: IAdditionalService,
-    currencies: ICurrency[],
-) {
-    // this will return amount/name like "10 $"
-    // first we need to get the charge name
-    const CODE = currencies.find(
-        (currency) => currency.id === additionalService.Id,
-    )!.code;
-    return `${additionalService.charges[0].Amount} ${CODE}`;
-}
 export function buildFormAdditionalServices({
     additionalServices,
     serviceRequest,
     setServiceRequest,
     currencies,
+    perferredCurrencyId,
+    currentCurrency,
 }: {
     additionalServices: IAdditionalService[];
     serviceRequest: IRequest;
     setServiceRequest: Dispatch<SetStateAction<IRequest>>;
     currencies: ICurrency[];
+    perferredCurrencyId: number;
+    currentCurrency: ICurrency;
 }) {
-    console.log({ additionalServices, serviceRequest });
     function isChecked(Id: number) {
         return serviceRequest.additionalService.some(
             (additionalService) => additionalService.Id === Id,
@@ -60,7 +52,12 @@ export function buildFormAdditionalServices({
         } else
             currentAdditionalServices = [
                 ...currentAdditionalServices,
-                checkedAdditonalService,
+                {
+                    Id: checkedAdditonalService.Id,
+                    Name_L1: checkedAdditonalService.Name_L1,
+                    Name_L2: checkedAdditonalService.Name_L2,
+                    Name_L3: checkedAdditonalService.Name_L3,
+                },
             ];
 
         setServiceRequest((currentServiceRequest) => ({
@@ -87,7 +84,7 @@ export function buildFormAdditionalServices({
                                 onChange={(e) =>
                                     handleChange(e, additionalService)
                                 }
-                                color="info"
+                                color="primary"
                                 {...ariaLabel}
                                 icon={
                                     <BookmarkBorderIcon sx={{ fontSize: 30 }} />
@@ -107,17 +104,22 @@ export function buildFormAdditionalServices({
                                     {additionalService.Name_L2}
                                 </Typography>
                                 <Chip
-                                    label={getPrice(
-                                        additionalService,
-                                        currencies,
-                                    )}
+                                    label={
+                                        additionalService.charges.find(
+                                            (charge) =>
+                                                charge.CurrencyId ===
+                                                perferredCurrencyId,
+                                        )?.Amount +
+                                        " " +
+                                        currentCurrency.code
+                                    }
                                     variant="filled"
                                     sx={{
                                         borderRadius: 1,
                                         fontWeight: "bold",
                                         direction: "rtl",
                                     }}
-                                    color="secondary"
+                                    color="error"
                                 />
                             </Stack>
                         }

@@ -59,5 +59,13 @@
     "show": "show",
     "add_request": "Add Request",
     "upload_file_failed": "an error occurred while uplaoding the file, please try again",
-    "upload_file_success": "file uploaded successfully"
+    "upload_file_success": "file uploaded successfully",
+    "submit_form": "Submit",
+    "send_request": "Send Request",
+    "total_cost": "Total Cost",
+    "service_cost": "Service Cost",
+    "close": "Close",
+    "apply": "Apply",
+    "add_request_success": "The request has been submitted successfully",
+    "add_request_failed": "An error occurred while placing the order"
 }

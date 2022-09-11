@@ -59,5 +59,13 @@
     "show": "عرض",
     "add_request": "تقديم طلب",
     "upload_file_failed": "حذث خطا أثناء رفع الملف يرجى المحاولة مرة اخرى",
-    "upload_file_success": "تم رفع الملف بنجاح"
+    "upload_file_success": "تم رفع الملف بنجاح",
+    "submit_form": "إرسال",
+    "send_request": "إرسال طلب",
+    "service_cost": "كلفة الخدمة",
+    "total_cost": "المجموع الكلي",
+    "close": "إغلاق",
+    "apply": "تأكيد",
+    "add_request_success": "تم تقديم الطلب بنجاح",
+    "add_request_failed": "حدث خطأ أثناء تقديم الطلب"
 }

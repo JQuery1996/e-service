@@ -3,7 +3,7 @@ import { decode } from "../../utils/decode-token";
 import { RootState } from "../../app/store";
 
 export interface IAuthUserSlice {
-    Id: string;
+    Id: number;
     email: string;
     exp: number;
     iat: number;

@@ -9,7 +9,7 @@ export interface IRequest {
         IsAdminNote: boolean;
         AdminName: string;
     }[];
-    documentsIds: number[];
+    documentsId: number[];
     additionalService: {
         Id: number;
         Name_L1: string | null;

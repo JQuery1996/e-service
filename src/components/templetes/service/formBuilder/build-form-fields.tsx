@@ -213,6 +213,37 @@ export function buildFormFields({
     }
     return (
         <>
+            <Grid item xs={12} sm={12} md={4} lg={4} sx={{ mx: 2 }}>
+                <TextField
+                    fullWidth
+                    label="رقم الهاتف"
+                    value={serviceRequest.mobileNumber}
+                    onChange={(e) =>
+                        setServiceRequest((currentServiceRequest) => ({
+                            ...currentServiceRequest,
+                            mobileNumber: e.target.value,
+                        }))
+                    }
+                    required
+                    error={
+                        !Validator.nonEmptyStringValidation(
+                            serviceRequest.mobileNumber ?? "",
+                        )
+                    }
+                    helperText={
+                        Validator.nonEmptyStringValidation(
+                            serviceRequest.mobileNumber ?? "",
+                        ) ? (
+                            ""
+                        ) : (
+                            <ErrorMessage
+                                message={i18n.t("field_is_required")}
+                            />
+                        )
+                    }
+                    variant={VARIANT}
+                />
+            </Grid>
             {serviceFields.map((serviceField, index) => (
                 <Grid
                     key={index}

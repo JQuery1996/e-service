@@ -11,3 +11,6 @@ export * from "./additonal-service";
 export * from "./charge";
 export * from "./input-mapper";
 export * from "./currency";
+export * from "./uploaded-file";
+export * from "./request-information";
+export * from "./full-request-info";

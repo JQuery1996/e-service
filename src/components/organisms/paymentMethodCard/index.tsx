@@ -46,7 +46,6 @@ export function PaymentMethodCard({
     open: boolean;
     setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-    console.log(PAYMENT_LOGO_DOWNLOAD_URL + "/" + 1);
     const { t } = useTranslation();
     // State for List of all Payment method
     const [paymentMethods, setPaymentMethods] = useState<

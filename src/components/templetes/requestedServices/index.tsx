@@ -58,7 +58,6 @@ export const ReqestedServicesTemplete: FC<
         fetchRequestList();
     }, [authenticatedUser, dispatch, setLoadingState, setRequestList]);
 
-    console.log({ requestList });
     return isLoading ? (
         <Loader />
     ) : (

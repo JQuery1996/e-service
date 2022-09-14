@@ -75,7 +75,7 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
         // Fields Section
         initialRequestForm.serviceId = service.Id;
         initialRequestForm.StatusId = 1;
-        initialRequestForm.userId = 78;
+        initialRequestForm.userId = authenticatedUser!.Id;
         initialRequestForm.email = authenticatedUser!.email;
         initialRequestForm.Fields = serviceForm.Fields.map(
             ({ Name_L1, Name_L2, Name_L3, Type }) => ({
@@ -106,7 +106,6 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
         ) as ICurrency;
     }, [currencies, preferredCurrencyId]);
 
-    console.log({ serviceRequest });
     const breadcrumbs = [
         <Link
             key="key_1"

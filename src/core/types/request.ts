@@ -1,7 +1,7 @@
 export interface IRequest {
     serviceId: number;
     mobileNumber?: string;
-    StatusId: number;
+    StatusId?: number;
     userId: number;
     email: string;
     notes: {

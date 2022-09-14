@@ -4,7 +4,6 @@ import i18n from "i18n";
 import {
     FormControl,
     FormControlLabel,
-    FormHelperText,
     FormLabel,
     Grid,
     InputLabel,

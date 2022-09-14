@@ -10,6 +10,7 @@ import {
     Grid,
     List,
     ListItemText,
+    responsiveFontSizes,
     Stack,
     Typography,
 } from "@mui/material";
@@ -90,11 +91,16 @@ export function SendRequestDialog({
         if (!serviceRequestValidation(serviceRequest, serviceForm)) return;
         try {
             dispatch(setLoadingState(true));
-            const responsedRequest = await ReactAxios.post(
+            const response = await ReactAxios.post(
                 process.env.REACT_APP_ADD_REQUEST!,
                 serviceRequest,
             );
-            console.log(responsedRequest);
+            if (response.data.Code === 400) {
+                dispatch(setLoadingState(false));
+                handleClose();
+                notify("error", i18n.t("add_request_failed"));
+                return;
+            }
             dispatch(setLoadingState(false));
             handleClose();
             notify("success", i18n.t("add_request_success"));

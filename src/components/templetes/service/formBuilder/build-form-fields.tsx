@@ -157,7 +157,7 @@ export function buildFormFields({
                             {Field.Options?.map((Option) => (
                                 <FormControlLabel
                                     key={Option.Id}
-                                    value={Option.Id}
+                                    value={Option.Value_L2}
                                     control={<Radio />}
                                     label={Option.Value_L2}
                                 />
@@ -217,7 +217,7 @@ export function buildFormFields({
                 <TextField
                     fullWidth
                     label="رقم الهاتف"
-                    value={serviceRequest.mobileNumber}
+                    value={serviceRequest.mobileNumber ?? ""}
                     onChange={(e) =>
                         setServiceRequest((currentServiceRequest) => ({
                             ...currentServiceRequest,

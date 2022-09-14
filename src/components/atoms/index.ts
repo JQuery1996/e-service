@@ -10,3 +10,5 @@ export * from "./pagination";
 export * from "./tabs";
 export * from "./error-message";
 export * from "./file-card";
+export * from "./note";
+export * from "./notes";

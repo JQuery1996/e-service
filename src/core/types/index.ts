@@ -14,3 +14,5 @@ export * from "./currency";
 export * from "./uploaded-file";
 export * from "./request-information";
 export * from "./full-request-info";
+export * from "./note";
+export * from "./payment-method-response";

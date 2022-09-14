@@ -1,6 +1,7 @@
 {
     "search_for_services": "Search for services",
     "show_more": "Show more",
+    "show_less": "Show Less",
     "suggested_to_you": "Suggested to you",
     "request_service": "Request service",
     "fill_in_your_details": "Fill in your details",
@@ -67,5 +68,9 @@
     "close": "Close",
     "apply": "Apply",
     "add_request_success": "The request has been submitted successfully",
-    "add_request_failed": "An error occurred while placing the order"
+    "add_request_failed": "An error occurred while placing the order",
+    "send": "Send",
+    "added_note_success": "Note has been added successfully",
+    "added_note_failed": "an error occurred while adding the note",
+    "select_payment_method": "Please Select The Payment Method"
 }

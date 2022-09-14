@@ -42,6 +42,7 @@ import { Tabs } from "components/atoms";
 import { ServiceForm } from "./service-form";
 import { SendRequestDialog } from "./send-request-dialog";
 import { useAuth } from "utils/hooks/useAuth";
+import { PaymentMethodCard } from "components/organisms";
 
 export interface ServiceTempleteProps {
     service: IService;
@@ -66,6 +67,8 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
     const [sendDialogOpen, setSendDialogOpen] = useState<boolean>(false);
 
     const [uploadedFiles, setUploadedFiles] = useState<IUploadFile[]>([]);
+
+    const [paymentDialogOpen, setPaymentDialogOpen] = useState<boolean>(false);
 
     const initialRequestForm = {} as IRequest;
     if (serviceForm) {
@@ -325,15 +328,22 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
             </Container>
 
             {hasFormCondition && (
-                <SendRequestDialog
-                    open={sendDialogOpen}
-                    setOpen={setSendDialogOpen}
-                    service={service}
-                    serviceForm={serviceForm!}
-                    serviceRequest={serviceRequest}
-                    preferredCurrencyId={preferredCurrencyId}
-                    currentCurrency={currentCurrency}
-                />
+                <>
+                    <SendRequestDialog
+                        open={sendDialogOpen}
+                        setOpen={setSendDialogOpen}
+                        service={service}
+                        serviceForm={serviceForm!}
+                        serviceRequest={serviceRequest}
+                        preferredCurrencyId={preferredCurrencyId}
+                        currentCurrency={currentCurrency}
+                        setPaymentMethodOpen={setPaymentDialogOpen}
+                    />
+                    <PaymentMethodCard
+                        open={paymentDialogOpen}
+                        setOpen={setPaymentDialogOpen}
+                    />
+                </>
             )}
         </>
     );

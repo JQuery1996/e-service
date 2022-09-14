@@ -77,94 +77,82 @@ export const FileDropZone: FC<FileDropZoneProps> = ({
     const { t } = useTranslation();
 
     async function onDrop(acceptedFiles: any) {
-        acceptedFiles.forEach((acceptedFile: any) => {
-            setFile(
-                Object.assign(acceptedFile, {
-                    preview: URL.createObjectURL(acceptedFile),
-                }),
-            );
-            const reader = new FileReader();
-            reader.onabort = () => console.log("file reading was aborted");
-            reader.onerror = () => console.log("file reading has failed");
-            reader.onload = async () => {
-                // Do whatever you want with the file contents
-                // upload my file here
-                // upload file api takes 3 paramaters
-                // 1. documentImage => of type file
-                // 2. DocumentTypeId => of type string
-                // 3. userId => id of the current authenticated user
-                const formData = new FormData();
-                formData.append("documentImage", acceptedFile);
-                formData.append("DocumentTypeId", document!.Id.toString());
-                formData.append("userId", authenticatedUser!.Id.toString());
+        if (!acceptedFiles || acceptedFiles.length === 0) return;
+        const acceptedFile = acceptedFiles[0];
+        await setFile(
+            Object.assign(acceptedFile, {
+                preview: URL.createObjectURL(acceptedFile),
+            }),
+        );
+        const reader = new FileReader();
+        reader.onabort = () => console.log("file reading was aborted");
+        reader.onerror = () => console.log("file reading has failed");
+        reader.onload = async () => {
+            // Do whatever you want with the file contents
+            // upload my file here
+            // upload file api takes 3 paramaters
+            // 1. documentImage => of type file
+            // 2. DocumentTypeId => of type string
+            // 3. userId => id of the current authenticated user
+            const formData = new FormData();
+            formData.append("documentImage", acceptedFile);
+            formData.append("DocumentTypeId", document!.Id.toString());
+            formData.append("userId", authenticatedUser!.Id.toString());
 
-                try {
-                    if (!setUploadedFiles) return null;
-                    setFileLoader(true);
-                    const responsedDocument = await ReactAxios.post(
-                        UPLOAD_FILE_URL,
-                        formData,
-                    );
-                    if (responsedDocument.data.Code === 200) {
-                        notify("success", t("upload_file_success"));
-                        // success case
-                        setUploadedFiles((currentUploadedFiles) => {
-                            const index = currentUploadedFiles.findIndex(
-                                (uploadedFile) =>
-                                    uploadedFile.DocumentType ===
-                                    responsedDocument.data.Data.DocumentType.Id,
+            try {
+                if (!setUploadedFiles) return null;
+                setFileLoader(true);
+                const responsedDocument = await ReactAxios.post(
+                    UPLOAD_FILE_URL,
+                    formData,
+                );
+                if (responsedDocument.data.Code === 200) {
+                    notify("success", t("upload_file_success"));
+                    // success case
+                    setUploadedFiles((currentUploadedFiles) => {
+                        const index = currentUploadedFiles.findIndex(
+                            (uploadedFile) =>
+                                uploadedFile.DocumentType ===
+                                responsedDocument.data.Data.DocumentType.Id,
+                        );
+                        if (index === -1)
+                            // first time uploaded this type of documents
+                            return [
+                                ...currentUploadedFiles,
+                                {
+                                    DocumentType: document!.Id,
+                                    Id: responsedDocument.data.Data.Id,
+                                },
+                            ];
+                        else
+                            return currentUploadedFiles.map((uploadedFile) =>
+                                uploadedFile.DocumentType === document!.Id
+                                    ? {
+                                          DocumentType: document!.Id,
+                                          Id: responsedDocument.data.Data.Id,
+                                      }
+                                    : uploadedFile,
                             );
-                            if (index === -1)
-                                // first time uploaded this type of documents
-                                return [
-                                    ...currentUploadedFiles,
-                                    {
-                                        DocumentType: document!.Id,
-                                        Id: responsedDocument.data.Data.Id,
-                                    },
-                                ];
-                            else
-                                return currentUploadedFiles.map(
-                                    (uploadedFile) =>
-                                        uploadedFile.DocumentType ===
-                                        document!.Id
-                                            ? {
-                                                  DocumentType: document!.Id,
-                                                  Id: responsedDocument.data
-                                                      .Data.Id,
-                                              }
-                                            : uploadedFile,
-                                );
-                        });
-                    }
-                    setFileLoader(false);
-                } catch (error) {
-                    setFileLoader(false);
-                    setFile(null);
-                    notify("error", t("upload_file_failed"));
-                    console.log(error);
+                    });
                 }
-            };
-            reader.readAsArrayBuffer(acceptedFile);
-        });
+                setFileLoader(false);
+            } catch (error) {
+                setFileLoader(false);
+                setFile(null);
+                notify("error", t("upload_file_failed"));
+                console.log(error);
+            }
+        };
+        reader.readAsArrayBuffer(acceptedFile);
     }
 
-    console.log("File Type is : ", file?.type);
     const thumbs: any = file && (
         <div style={thumb} key={file.name}>
             <div style={thumbInner}>
                 {file.type.split("/")[0] === "image" ? (
                     <img src={file.preview} style={img} alt="file Preview" />
                 ) : (
-                    <iframe
-                        title={file.name}
-                        src={file.preview}
-                        style={img}
-                        // Revoke data uri after image is loaded
-                        onLoad={() => {
-                            URL.revokeObjectURL(file.preview);
-                        }}
-                    />
+                    <embed title={file.name} src={file.preview} />
                 )}
             </div>
         </div>

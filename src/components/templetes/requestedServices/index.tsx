@@ -24,6 +24,7 @@ import moment from "moment";
 import "moment/locale/ar";
 import { Loader } from "features/loader/Loader";
 import { useNavigate } from "react-router";
+import { useAuth } from "utils/hooks/useAuth";
 
 export interface ReqestedServicesTempleteProps {}
 
@@ -36,14 +37,17 @@ export const ReqestedServicesTemplete: FC<
     const dispatch = useAppDispatch();
     const { isLoading, setLoadingState } = useLoader();
     const navigation = useNavigate();
+    const { authenticatedUser } = useAuth();
+
     useEffect(() => {
         async function fetchRequestList() {
             try {
                 dispatch(setLoadingState(true));
-
-                const responsedRequestList = await ReactAxios.get(
-                    REQUEST_LIST_URL,
-                );
+                const url =
+                    authenticatedUser && authenticatedUser.role === "Admin"
+                        ? REQUEST_LIST_URL
+                        : `${REQUEST_LIST_URL}/${authenticatedUser?.Id}`;
+                const responsedRequestList = await ReactAxios.get(url);
                 setRequestList(responsedRequestList.data.Data);
                 dispatch(setLoadingState(false));
             } catch (error) {
@@ -52,7 +56,7 @@ export const ReqestedServicesTemplete: FC<
             }
         }
         fetchRequestList();
-    }, [dispatch, setLoadingState, setRequestList]);
+    }, [authenticatedUser, dispatch, setLoadingState, setRequestList]);
 
     console.log({ requestList });
     return isLoading ? (
@@ -118,10 +122,13 @@ export const ReqestedServicesTemplete: FC<
                                     </TableCell>
                                     <TableCell align="left">
                                         <Chip
-                                            color="secondary"
+                                            // color=""
                                             label={request.status.Name_L2}
                                             size="medium"
-                                            sx={{ borderRadius: 1 }}
+                                            sx={{
+                                                borderRadius: 1,
+                                                fontWeight: "bold",
+                                            }}
                                         />
                                     </TableCell>
                                     <TableCell

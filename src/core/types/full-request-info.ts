@@ -1,3 +1,4 @@
+import { INote } from "./note";
 export interface IFullRequestInformation {
     id: number;
     service: {
@@ -30,10 +31,11 @@ export interface IFullRequestInformation {
         DocumentType: number;
         creationTimeStamp: Date;
     }[];
-    Notes: {
-        Note: string;
-        IsAdminNote: boolean;
-        AdminName: string;
-        CreationDate: Date;
-    }[];
+    Notes: INote[];
+    requestStatus: {
+        Id: number;
+        Name_L1: string;
+        Name_L2: string;
+        Name_L3: string;
+    };
 }

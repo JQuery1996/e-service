@@ -10,6 +10,7 @@ import {
     Grid,
     Divider,
     TextField,
+    CircularProgress,
 } from "@mui/material";
 import {
     Label as LabelIcon,
@@ -20,13 +21,17 @@ import {
 } from "@mui/icons-material";
 import moment from "moment";
 import "moment/locale/ar";
-import { FileCard } from "components/atoms";
+import { FileCard, Notes } from "components/atoms";
+import { AddNote } from "./add-note";
+import { Dispatch, SetStateAction } from "react";
 
 export function RequestTemplate({
     request,
+    setRequest,
     documentTypeList,
 }: {
     request: IFullRequestInformation;
+    setRequest: Dispatch<SetStateAction<IFullRequestInformation | null>>;
     documentTypeList: IDocumentType[];
 }) {
     return (
@@ -56,15 +61,32 @@ export function RequestTemplate({
                             </Typography>
                         </Stack>
                     }
+                    subheader={
+                        <Stack direction="row" spacing={1} sx={{ mx: 5 }}>
+                            <AccessTimeIcon fontSize="small" />
+                            <Typography variant="caption">
+                                {moment(request.CreationDate)
+                                    .locale("ar")
+                                    .format("MMMM Do YYYY - h:mm:ss a")}
+                            </Typography>
+                        </Stack>
+                    }
                     action={
                         <Chip
-                            label={moment(request.CreationDate)
-                                .locale("ar")
-                                .format("MMMM Do YYYY - h:mm:ss a")}
-                            icon={<AccessTimeIcon />}
-                            color="info"
+                            // label={`الخدمة ${request.requestStatus.Name_L2}`}
+                            label={
+                                <Stack direction="row" spacing={2}>
+                                    <CircularProgress
+                                        size="1.2rem"
+                                        color="inherit"
+                                    />
+                                    <Typography variant="body2">
+                                        الخدمة {request.requestStatus.Name_L2}
+                                    </Typography>
+                                </Stack>
+                            }
                             size="medium"
-                            sx={{ mt: 1, fontWeight: "bold", borderRadius: 1 }}
+                            sx={{ borderRadius: 1, fontWeight: "bold" }}
                         />
                     }
                 />
@@ -123,7 +145,7 @@ export function RequestTemplate({
                         تفاصيل طالب الخدمة
                     </Divider>
                     <Grid container sx={{ mt: 2 }}>
-                        <Grid item xs={12} sm={12} md={6} sx={{ my: 2 }}>
+                        <Grid item xs={12} sm={12} md={6} lg={4} sx={{ my: 2 }}>
                             <Stack direction="row" spacing={1}>
                                 <EmailOutlinedIcon color="primary" />
                                 <Typography>الإيميل : </Typography>
@@ -136,7 +158,7 @@ export function RequestTemplate({
                             </Stack>
                         </Grid>
 
-                        <Grid item xs={12} sm={12} md={6} sx={{ my: 2 }}>
+                        <Grid item xs={12} sm={12} md={6} lg={4} sx={{ my: 2 }}>
                             <Stack direction="row" spacing={1}>
                                 <LocalPhoneOutlinedIcon color="primary" />
                                 <Typography>الموبايل : </Typography>
@@ -231,6 +253,18 @@ export function RequestTemplate({
                             />
                         ))}
                     </Stack>
+                </CardContent>
+
+                <CardContent>
+                    <Divider
+                        textAlign="left"
+                        sx={{ mt: 2, fontWeight: "bold" }}
+                    >
+                        الملاحظات
+                    </Divider>
+
+                    <Notes notes={request.Notes} email={request.email} />
+                    <AddNote requestId={request.id} setRequest={setRequest} />
                 </CardContent>
             </Card>
         </Container>

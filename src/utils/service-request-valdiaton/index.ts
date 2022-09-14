@@ -8,8 +8,7 @@ export function serviceRequestValidation(
     if (
         !serviceRequest.email ||
         !serviceRequest.mobileNumber ||
-        !serviceRequest.userId ||
-        !serviceRequest.StatusId
+        !serviceRequest.userId
     )
         return false;
     const requestFields = serviceRequest.Fields;

@@ -1,6 +1,7 @@
 {
     "search_for_services": "ابحث عن خدمة",
     "show_more": "عرض المزيد",
+    "show_less": "عرض أقل",
     "suggested_to_you": "مقترحة لك",
     "request_service": "اطلب خدمة",
     "fill_in_your_details": "املأ بياناتك",
@@ -67,5 +68,9 @@
     "close": "إغلاق",
     "apply": "تأكيد",
     "add_request_success": "تم تقديم الطلب بنجاح",
-    "add_request_failed": "حدث خطأ أثناء تقديم الطلب"
+    "add_request_failed": "حدث خطأ أثناء تقديم الطلب",
+    "send": "إرسال",
+    "added_note_success": "تم إضافة الملاحظة بنجاح",
+    "added_note_failed": "حدث خطأ أثناء إضافة الملاحظة",
+    "select_payment_method": "اختر طريقة الدفع"
 }

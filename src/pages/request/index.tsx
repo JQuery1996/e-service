@@ -50,6 +50,7 @@ export default function Request() {
             {request && (
                 <RequestTemplate
                     request={request!}
+                    setRequest={setRequest}
                     documentTypeList={documentTypeList}
                 />
             )}

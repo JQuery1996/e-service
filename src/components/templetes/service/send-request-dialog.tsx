@@ -10,6 +10,7 @@ import {
     Grid,
     List,
     ListItemText,
+    responsiveFontSizes,
     Stack,
     Typography,
 } from "@mui/material";
@@ -35,6 +36,7 @@ export interface ISendRequestDialog {
     serviceRequest: IRequest;
     preferredCurrencyId: number;
     currentCurrency: ICurrency;
+    setPaymentMethodOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export function SendRequestDialog({
@@ -45,6 +47,7 @@ export function SendRequestDialog({
     serviceRequest,
     preferredCurrencyId,
     currentCurrency,
+    setPaymentMethodOpen,
 }: ISendRequestDialog) {
     const { t } = useTranslation();
     const { isLoading, setLoadingState } = useLoader();
@@ -88,14 +91,20 @@ export function SendRequestDialog({
         if (!serviceRequestValidation(serviceRequest, serviceForm)) return;
         try {
             dispatch(setLoadingState(true));
-            const responsedRequest = await ReactAxios.post(
+            const response = await ReactAxios.post(
                 process.env.REACT_APP_ADD_REQUEST!,
                 serviceRequest,
             );
-            console.log(responsedRequest);
+            if (response.data.Code === 400) {
+                dispatch(setLoadingState(false));
+                handleClose();
+                notify("error", i18n.t("add_request_failed"));
+                return;
+            }
             dispatch(setLoadingState(false));
             handleClose();
             notify("success", i18n.t("add_request_success"));
+            setPaymentMethodOpen(true);
         } catch (error) {
             console.log(error);
             dispatch(setLoadingState(false));
@@ -249,7 +258,7 @@ export function SendRequestDialog({
                             </Grid>
                         </List>
                     </DialogContentText>
-                    <Divider textAlign="center">{t("total_cost")}</Divider>
+                    <Divider textAlign="left">{t("total_cost")}</Divider>
                     <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
                         <LabelImportantIcon
                             sx={{ fontSize: 30, transform: "rotate(180deg)" }}

@@ -54,8 +54,6 @@ const ServicePage: FC<ServicePageProps> = () => {
         }
         loadService();
     }, [currencies.length, dispatch, serviceId, setLoadingState]);
-
-    console.log({ currentServiceForm });
     return !currentService.Id ? (
         <Loader />
     ) : (

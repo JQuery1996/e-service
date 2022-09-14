@@ -42,6 +42,7 @@ import { Tabs } from "components/atoms";
 import { ServiceForm } from "./service-form";
 import { SendRequestDialog } from "./send-request-dialog";
 import { useAuth } from "utils/hooks/useAuth";
+import { PaymentMethodCard } from "components/organisms";
 
 export interface ServiceTempleteProps {
     service: IService;
@@ -67,12 +68,14 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
 
     const [uploadedFiles, setUploadedFiles] = useState<IUploadFile[]>([]);
 
+    const [paymentDialogOpen, setPaymentDialogOpen] = useState<boolean>(false);
+
     const initialRequestForm = {} as IRequest;
     if (serviceForm) {
         // Fields Section
         initialRequestForm.serviceId = service.Id;
         initialRequestForm.StatusId = 1;
-        initialRequestForm.userId = 78;
+        initialRequestForm.userId = authenticatedUser!.Id;
         initialRequestForm.email = authenticatedUser!.email;
         initialRequestForm.Fields = serviceForm.Fields.map(
             ({ Name_L1, Name_L2, Name_L3, Type }) => ({
@@ -103,7 +106,6 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
         ) as ICurrency;
     }, [currencies, preferredCurrencyId]);
 
-    console.log({ serviceRequest });
     const breadcrumbs = [
         <Link
             key="key_1"
@@ -325,15 +327,22 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
             </Container>
 
             {hasFormCondition && (
-                <SendRequestDialog
-                    open={sendDialogOpen}
-                    setOpen={setSendDialogOpen}
-                    service={service}
-                    serviceForm={serviceForm!}
-                    serviceRequest={serviceRequest}
-                    preferredCurrencyId={preferredCurrencyId}
-                    currentCurrency={currentCurrency}
-                />
+                <>
+                    <SendRequestDialog
+                        open={sendDialogOpen}
+                        setOpen={setSendDialogOpen}
+                        service={service}
+                        serviceForm={serviceForm!}
+                        serviceRequest={serviceRequest}
+                        preferredCurrencyId={preferredCurrencyId}
+                        currentCurrency={currentCurrency}
+                        setPaymentMethodOpen={setPaymentDialogOpen}
+                    />
+                    <PaymentMethodCard
+                        open={paymentDialogOpen}
+                        setOpen={setPaymentDialogOpen}
+                    />
+                </>
             )}
         </>
     );

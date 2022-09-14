@@ -1,4 +1,3 @@
-import { PageNotFound } from "pages";
 import { useRoutes } from "react-router-dom";
 
 // routes

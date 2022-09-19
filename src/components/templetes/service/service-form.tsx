@@ -1,4 +1,4 @@
-import { Chip, Divider, Grid } from "@mui/material";
+import { Chip, Divider, Grid, Paper } from "@mui/material";
 import { IForm, IRequest, ICurrency, IUploadFile } from "core/types";
 import { Dispatch, SetStateAction } from "react";
 import { buildFormAdditionalServices } from "./formBuilder/build-form-additional-services";
@@ -35,6 +35,8 @@ export function ServiceForm({
                         fontSize: 14,
                         borderRadius: 1,
                     }}
+                    component={Paper}
+                    elevation={10}
                 />
             </Divider>
             <Grid container spacing={2}>
@@ -56,6 +58,8 @@ export function ServiceForm({
                         fontSize: 14,
                         borderRadius: 1,
                     }}
+                    component={Paper}
+                    elevation={10}
                 />
             </Divider>
             <Grid container spacing={2}>
@@ -69,7 +73,7 @@ export function ServiceForm({
                 })}
             </Grid>
 
-            <Divider textAlign="left" sx={{ mt: 4, mb: 4 }}>
+            <Divider textAlign="center" sx={{ mt: 4, mb: 4 }}>
                 <Chip
                     label="المرفقات"
                     color="primary"
@@ -78,6 +82,8 @@ export function ServiceForm({
                         fontSize: 14,
                         borderRadius: 1,
                     }}
+                    component={Paper}
+                    elevation={10}
                 />
             </Divider>
             <Grid container spacing={2}>

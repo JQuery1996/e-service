@@ -17,6 +17,7 @@ import {
     Chip,
     CardActions,
     Button,
+    Paper,
 } from "@mui/material";
 
 import {
@@ -143,6 +144,7 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
             serviceForm && serviceForm.Fields && serviceForm.Fields.length > 0,
         [serviceForm],
     );
+
     return (
         <>
             <Container maxWidth="xl">
@@ -250,8 +252,13 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
                                             " " +
                                             currentCurrency.code
                                         }
-                                        color="error"
+                                        color="warning"
+                                        variant="filled"
+                                        size="small"
                                         sx={{ borderRadius: 1 }}
+                                        style={{ marginTop: 6 }}
+                                        component={Paper}
+                                        elevation={5}
                                     />
                                 </Stack>
                             }
@@ -261,11 +268,15 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
                             }}
                             subheader={service.Name_L2}
                             action={
-                                <FormControl fullWidth sx={{ minWidth: 150 }}>
+                                <FormControl
+                                    fullWidth
+                                    sx={{
+                                        minWidth: { sm: 100, md: 150, lg: 200 },
+                                    }}
+                                >
                                     <InputLabel
                                         id="demo-simple-select-label"
-                                        color="secondary"
-                                        sx={{ fontWeight: "bold" }}
+                                        color="primary"
                                     >
                                         العملة
                                     </InputLabel>
@@ -279,8 +290,7 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
                                             )
                                         }
                                         label="العملة"
-                                        color="primary"
-                                        sx={{ fontWeight: "bold" }}
+                                        size="small"
                                     >
                                         {currencies.map((currency) => (
                                             <MenuItem
@@ -312,12 +322,14 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
                         <Divider sx={{ my: 2 }} />
                         <CardActions sx={{ justifyContent: "center" }}>
                             <Button
-                                variant="outlined"
-                                color="primary"
+                                variant="contained"
+                                color="success"
                                 startIcon={<SendIcon />}
                                 sx={{ borderRadius: 1 }}
                                 size="large"
                                 onClick={() => setSendDialogOpen(true)}
+                                component={Paper}
+                                elevation={24}
                             >
                                 {t("submit_form")}
                             </Button>

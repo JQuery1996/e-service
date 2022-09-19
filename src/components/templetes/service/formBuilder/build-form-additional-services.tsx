@@ -6,10 +6,11 @@ import {
     FormControlLabel,
     Typography,
     Chip,
+    Paper,
 } from "@mui/material";
 import {
     BookmarkBorder as BookmarkBorderIcon,
-    Bookmark as BookmarkIcon,
+    BookmarkAdd as BookmarkAddIcon,
 } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 
@@ -90,13 +91,13 @@ export function buildFormAdditionalServices({
                                     <BookmarkBorderIcon sx={{ fontSize: 30 }} />
                                 }
                                 checkedIcon={
-                                    <BookmarkIcon sx={{ fontSize: 30 }} />
+                                    <BookmarkAddIcon sx={{ fontSize: 30 }} />
                                 }
                                 size="medium"
                             />
                         }
                         label={
-                            <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
+                            <Stack direction="row" spacing={1}>
                                 <Typography
                                     variant="body1"
                                     sx={{ fontWeight: "bold" }}
@@ -119,7 +120,10 @@ export function buildFormAdditionalServices({
                                         fontWeight: "bold",
                                         direction: "rtl",
                                     }}
-                                    color="error"
+                                    color="warning"
+                                    size="small"
+                                    component={Paper}
+                                    elevation={5}
                                 />
                             </Stack>
                         }

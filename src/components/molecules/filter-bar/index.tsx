@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Button, Container, Grid, Paper } from "@mui/material";
+import { Button, Chip, Container, Grid, Paper } from "@mui/material";
 import { ESelect } from "components/atoms";
 import { useTranslation } from "react-i18next";
 import SearchIcon from "@mui/icons-material/Search";
@@ -86,11 +86,26 @@ export function FilterBar({
                     alignItems="center"
                     spacing={4}
                 >
-                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                    <Grid item xs={12} sm={12} md={6} lg={4} sx={{ mb: 1 }}>
                         <ESelect
                             label={t("category")}
                             value={selectedCategory}
-                            setValue={handleSelectCategory}
+                            onChange={(e) =>
+                                handleSelectCategory(
+                                    e.target.value as unknown as ICategory,
+                                )
+                            }
+                            SelectProps={{
+                                renderValue: (select) => (
+                                    <Chip
+                                        color="primary"
+                                        label={(select as ICategory).Name_L2}
+                                        component={Paper}
+                                        elevation={10}
+                                        sx={{ borderRadius: 1 }}
+                                    />
+                                ),
+                            }}
                             options={categories.map((category) => ({
                                 label: category.Name_L2,
                                 value: category,
@@ -98,14 +113,29 @@ export function FilterBar({
                         />
                     </Grid>
 
-                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                    <Grid item xs={12} sm={12} md={6} lg={4} sx={{ mb: 1 }}>
                         <ESelect
                             color="primary"
                             autoFocus
                             disabled={!selectedCategory.Id}
                             value={selectedSubCategory}
                             label={t("subCategory")}
-                            setValue={(value) => setSelectedSubCategory(value)}
+                            onChange={(e) =>
+                                setSelectedSubCategory(
+                                    e.target.value as unknown as ISubCategory,
+                                )
+                            }
+                            SelectProps={{
+                                renderValue: (select) => (
+                                    <Chip
+                                        label={(select as ISubCategory).Name_L2}
+                                        color="primary"
+                                        component={Paper}
+                                        elevation={10}
+                                        sx={{ borderRadius: 1 }}
+                                    />
+                                ),
+                            }}
                             options={subCategories.map((subCategory) => ({
                                 label: subCategory.Name_L2,
                                 value: subCategory,
@@ -130,7 +160,7 @@ export function FilterBar({
                             variant={buttonVariant}
                             endIcon={<SearchIcon />}
                             size="large"
-                            sx={{ borderRadius: 0 }}
+                            sx={{ borderRadius: 0, mt: 3, height: 50 }}
                             onClick={handleGetServices}
                             onMouseEnter={(_) => setButtonVariant("contained")}
                             onMouseLeave={(_) => setButtonVariant("outlined")}

@@ -11,6 +11,7 @@ import {
     Divider,
     TextField,
     CircularProgress,
+    Paper,
 } from "@mui/material";
 import {
     Label as LabelIcon,
@@ -18,10 +19,11 @@ import {
     ChevronLeft as ChevronLeftIcon,
     EmailOutlined as EmailOutlinedIcon,
     LocalPhoneOutlined as LocalPhoneOutlinedIcon,
+    LabelImportant as LabelImportantIcon,
 } from "@mui/icons-material";
 import moment from "moment";
 import "moment/locale/ar";
-import { FileCard, Notes } from "components/atoms";
+import { EInput, FileCard, Notes } from "components/atoms";
 import { AddNote } from "./add-note";
 import { Dispatch, SetStateAction } from "react";
 
@@ -100,7 +102,10 @@ export function RequestTemplate({
                     <Grid container>
                         <Grid item xs={12} sm={12} md={6} lg={4} sx={{ my: 2 }}>
                             <Stack direction="row" spacing={1}>
-                                <ChevronLeftIcon />
+                                <LabelImportantIcon
+                                    color="primary"
+                                    sx={{ transform: "rotate(180deg)" }}
+                                />
                                 <Typography>اسم الخدمه (العربي) : </Typography>
                                 <Typography
                                     sx={{ fontWeight: "bold" }}
@@ -113,7 +118,10 @@ export function RequestTemplate({
 
                         <Grid item xs={12} sm={12} md={6} lg={4} sx={{ my: 2 }}>
                             <Stack direction="row" spacing={1}>
-                                <ChevronLeftIcon />
+                                <LabelImportantIcon
+                                    color="primary"
+                                    sx={{ transform: "rotate(180deg)" }}
+                                />
                                 <Typography>اسم الخدمه (الأجنبي) : </Typography>
                                 <Typography
                                     sx={{ fontWeight: "bold" }}
@@ -124,7 +132,7 @@ export function RequestTemplate({
                             </Stack>
                         </Grid>
 
-                        <Grid item xs={12} sm={12} md={6} lg={4} sx={{ my: 2 }}>
+                        {/* <Grid item xs={12} sm={12} md={6} lg={4} sx={{ my: 2 }}>
                             <Stack direction="row" spacing={1}>
                                 <ChevronLeftIcon />
                                 <Typography>اسم الخدمه (الفرنسي) : </Typography>
@@ -135,7 +143,7 @@ export function RequestTemplate({
                                     {request.service.Name_L3}
                                 </Typography>
                             </Stack>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
 
                     <Divider
@@ -179,7 +187,7 @@ export function RequestTemplate({
                         معلومات الطلب
                     </Divider>
                     <Grid container sx={{ mt: 2 }} spacing={2}>
-                        {request.requestRecord.Fields.map((Field, index) => (
+                        {request.requestRecord.Fields?.map((Field, index) => (
                             <Grid
                                 item
                                 xs={12}
@@ -189,7 +197,7 @@ export function RequestTemplate({
                                 sx={{ my: 2 }}
                                 key={index}
                             >
-                                <TextField
+                                {/* <TextField
                                     fullWidth
                                     label={
                                         <Typography
@@ -203,56 +211,86 @@ export function RequestTemplate({
                                         readOnly: true,
                                     }}
                                     defaultValue={Field.value}
+                                /> */}
+                                <EInput
+                                    fullWidth
+                                    label={Field.title_L2 ?? ""}
+                                    readOnly
+                                    defaultValue={Field.value}
                                 />
                             </Grid>
                         ))}
                     </Grid>
 
-                    <Divider
-                        textAlign="left"
-                        sx={{ mt: 2, fontWeight: "bold" }}
-                    >
-                        الخدمات الإضافية
-                    </Divider>
-                    <Stack direction="row" spacing={2} sx={{ mt: 4, mx: 2 }}>
-                        {request.requestRecord.AdditionalServices.map(
-                            (aS, index) => (
-                                <Chip
-                                    key={index}
-                                    label={aS.Name_L2}
-                                    color="error"
-                                    size="medium"
-                                    sx={{
-                                        fontWeight: "bold",
-                                        borderRadius: 2,
-                                        fontSize: 15,
-                                    }}
-                                />
-                            ),
+                    {request.requestRecord.AdditionalServices &&
+                        request.requestRecord.AdditionalServices.length > 0 && (
+                            <>
+                                <Divider
+                                    textAlign="left"
+                                    sx={{ mt: 2, fontWeight: "bold" }}
+                                >
+                                    الخدمات الإضافية
+                                </Divider>
+                                <Stack
+                                    direction="row"
+                                    spacing={2}
+                                    sx={{ mt: 4, mx: 2 }}
+                                >
+                                    {request.requestRecord.AdditionalServices?.map(
+                                        (aS, index) => (
+                                            <Chip
+                                                key={index}
+                                                label={aS.Name_L2}
+                                                variant="filled"
+                                                color="warning"
+                                                size="medium"
+                                                sx={{
+                                                    fontWeight: "bold",
+                                                    fontSize: 15,
+                                                    borderRadius: 1,
+                                                    p: 1,
+                                                }}
+                                                component={Paper}
+                                                elevation={5}
+                                            />
+                                        ),
+                                    )}
+                                </Stack>
+                            </>
                         )}
-                    </Stack>
 
-                    <Divider
-                        textAlign="left"
-                        sx={{ mt: 2, fontWeight: "bold" }}
-                    >
-                        الملفات المرفوعة
-                    </Divider>
-                    <Stack direction="row" spacing={4} sx={{ mt: 4, mx: 2 }}>
-                        {request.documents.map((document, index) => (
-                            <FileCard
-                                key={index}
-                                url={document.url}
-                                document={
-                                    documentTypeList.find(
-                                        ({ Id }) =>
-                                            Id === document.DocumentType,
-                                    )!
-                                }
-                                creationTimeStamp={document.creationTimeStamp}
-                            />
-                        ))}
-                    </Stack>
+                    {request.documents.length > 0 && (
+                        <>
+                            <Divider
+                                textAlign="left"
+                                sx={{ mt: 2, fontWeight: "bold" }}
+                            >
+                                الملفات المرفوعة
+                            </Divider>
+                            <Stack
+                                direction="row"
+                                spacing={4}
+                                sx={{ mt: 4, mx: 2 }}
+                            >
+                                {request.documents?.map((document, index) => (
+                                    <FileCard
+                                        key={index}
+                                        url={document.url}
+                                        document={
+                                            documentTypeList.find(
+                                                ({ Id }) =>
+                                                    Id ===
+                                                    document.DocumentType,
+                                            )!
+                                        }
+                                        creationTimeStamp={
+                                            document.creationTimeStamp
+                                        }
+                                    />
+                                ))}
+                            </Stack>
+                        </>
+                    )}
                 </CardContent>
 
                 <CardContent>

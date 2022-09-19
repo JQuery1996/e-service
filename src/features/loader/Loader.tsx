@@ -1,29 +1,22 @@
 // material ui imports
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 
-export function Loader({ specific }: { specific?: boolean }) {
+export function Loader() {
     return (
-        <Container
-            maxWidth="lg"
+        <Box
             sx={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 alignContent: "center",
-                ...(!specific && {
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    minWidth: "100%",
-                    height: "100vh",
-                    backgroundColor: "transparent",
-                }),
+                width: "100vw",
+                height: "100vh",
+                position: "fixed",
+                top: 0,
+                left: 0,
             }}
         >
-            <img
-                src={require("../../assets/images/loader.gif")}
-                alt="loading"
-            />
-        </Container>
+            <img src={require("assets/images/loader.gif")} alt="loading" />
+        </Box>
     );
 }

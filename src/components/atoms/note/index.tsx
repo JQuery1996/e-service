@@ -31,7 +31,7 @@ export function Note({
                 <Stack direction="column" spacing={0}>
                     <Typography
                         variant="body1"
-                        color="primary"
+                        color={IsAdminNote ? "success" : "primary"}
                         sx={{ fontWeight: "bold" }}
                     >
                         {IsAdminNote ? AdminName : email}

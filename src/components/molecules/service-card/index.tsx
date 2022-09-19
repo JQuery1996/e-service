@@ -11,6 +11,7 @@ import {
     Typography,
     IconButton,
     Divider,
+    CardActionArea,
 } from "@mui/material";
 
 import { FC } from "react";
@@ -21,7 +22,7 @@ import {
     Settings as SettingsIcon,
     ArrowBack as ArrowBackIcon,
     Description as DescriptionIcon,
-    Language as LanguageIcon,
+    LanguageOutlined as LanguageOutlinedIcon,
     Class as ClassIcon,
     SubdirectoryArrowLeft as SubdirectoryArrowLeftIcon,
 } from "@mui/icons-material";
@@ -57,83 +58,92 @@ export const ServiceCard: FC<IServiceCard> = ({
         );
     };
     return (
-        <Card>
-            <CardHeader
-                avatar={<SettingsIcon />}
-                title={service.Name_L2}
-                titleTypographyProps={{ fontWeight: "bold", variant: "body1" }}
-                subheader={service.Name_L1}
-                action={
-                    <IconButton
-                        sx={{ mt: 1 }}
-                        onClick={toggleDescriptionLanguage}
-                    >
-                        <LanguageIcon color="info" sx={{ cursor: "pointer" }} />
-                    </IconButton>
-                }
-                style={{ fontWeight: "bold" }}
-            />
+        <Card onClick={() => handleOpenService(service.Id)}>
+            <CardActionArea color="primary">
+                <CardHeader
+                    avatar={<SettingsIcon />}
+                    title={service.Name_L2}
+                    titleTypographyProps={{
+                        fontWeight: "bold",
+                        variant: "body1",
+                    }}
+                    subheader={service.Name_L1}
+                    action={
+                        <LanguageOutlinedIcon
+                            color="info"
+                            sx={{ cursor: "pointer" }}
+                        />
+                    }
+                    style={{ fontWeight: "bold" }}
+                />
 
-            <CardMedia
-                component="img"
-                height="250"
-                image={require("../../../assets/images/service.PNG")}
-                alt="Paella dish"
-            />
-            <CardContent
-                dir={descriptionLanguage === "Name_L1" ? "ltr" : "rtl"}
-            >
-                <Stack direction="row" spacing={2}>
-                    <DescriptionIcon fontSize="medium" color="primary" />
-                    <Typography
-                        variant="subtitle2"
-                        style={{ marginLeft: 16, fontWeight: "bold" }}
-                    >
-                        {service[descriptionLanguage]}
-                    </Typography>
-                </Stack>
+                <CardMedia
+                    component="img"
+                    height="250"
+                    image={require("assets/images/service.PNG")}
+                    alt="Paella dish"
+                />
+                <CardContent
+                    dir={descriptionLanguage === "Name_L1" ? "ltr" : "rtl"}
+                >
+                    <Stack direction="row" spacing={2}>
+                        <DescriptionIcon fontSize="medium" color="primary" />
+                        <Typography
+                            variant="subtitle2"
+                            style={{ marginLeft: 16, fontWeight: "bold" }}
+                        >
+                            {service[descriptionLanguage]}
+                        </Typography>
+                    </Stack>
 
-                <Stack direction="column" spacing={2} sx={{ mt: 2 }}>
-                    <ServiceCardChip
-                        dir={descriptionLanguage === "Name_L1" ? "ltr" : "rtl"}
-                        color="success"
-                        label={
-                            descriptionLanguage === "Name_L1"
-                                ? `Category: ${category.Name_L1}`
-                                : `الفئة: ${category.Name_L2}`
-                        }
-                        icon={<ClassIcon />}
-                    />
-                    <ServiceCardChip
-                        dir={descriptionLanguage === "Name_L1" ? "ltr" : "rtl"}
-                        color="info"
-                        label={
-                            descriptionLanguage === "Name_L1"
-                                ? `Sub-Category: ${subCategory.Name_L1}`
-                                : `الفئه الفرعية: ${subCategory.Name_L2}`
-                        }
-                        icon={<SubdirectoryArrowLeftIcon />}
-                    />
-                </Stack>
-            </CardContent>
-            <Divider />
+                    <Stack direction="column" spacing={2} sx={{ mt: 2 }}>
+                        <ServiceCardChip
+                            dir={
+                                descriptionLanguage === "Name_L1"
+                                    ? "ltr"
+                                    : "rtl"
+                            }
+                            color="success"
+                            label={
+                                descriptionLanguage === "Name_L1"
+                                    ? `Category: ${category.Name_L1}`
+                                    : `الفئة: ${category.Name_L2}`
+                            }
+                            icon={<ClassIcon />}
+                        />
+                        <ServiceCardChip
+                            dir={
+                                descriptionLanguage === "Name_L1"
+                                    ? "ltr"
+                                    : "rtl"
+                            }
+                            color="info"
+                            label={
+                                descriptionLanguage === "Name_L1"
+                                    ? `Sub-Category: ${subCategory.Name_L1}`
+                                    : `الفئه الفرعية: ${subCategory.Name_L2}`
+                            }
+                            icon={<SubdirectoryArrowLeftIcon />}
+                        />
+                    </Stack>
+                </CardContent>
+                <Divider />
+            </CardActionArea>
             <CardActions sx={{ mt: 1 }}>
-                <Tooltip title="دخول إلى التفاصيل">
-                    <Button
-                        variant="text"
-                        endIcon={
-                            <ArrowBackIcon
-                                sx={{ fontWeight: "bold" }}
-                                color="primary"
-                            />
-                        }
-                        onClick={() => handleOpenService(service.Id)}
-                        color="info"
-                        sx={{ fontWeight: "bold", color: "#000" }}
-                    >
-                        {t("enter")}
-                    </Button>
-                </Tooltip>
+                <Button
+                    variant="text"
+                    endIcon={
+                        <ArrowBackIcon
+                            sx={{ fontWeight: "bold" }}
+                            color="primary"
+                        />
+                    }
+                    onClick={() => handleOpenService(service.Id)}
+                    color="info"
+                    sx={{ fontWeight: "bold", color: "#000" }}
+                >
+                    {t("enter")}
+                </Button>
             </CardActions>
         </Card>
     );

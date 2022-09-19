@@ -44,27 +44,27 @@ export const HomeTemplete: FC<HomeTempleteProps> = () => {
 
     useEffect(() => {
         async function loadData() {
-            // show loading while fetching white fetching data
-            dispatch(setLoadingState(true));
-            // get list of services
-            const { count, services } = await fetchServicesByCountry(
-                country.Id,
-                currentSubCategory.Id || null,
-                currentPage,
-                +process.env.REACT_APP_PER_PAGE!,
-            );
-            // after finish fetching => hide loading indicator by set loading indicator to false
-            await setTotalCount(count);
-            await setServices(services);
-            // window.scrollTo(0, 0);
-            dispatch(setLoadingState(false));
+            try {
+                // show loading while fetching white fetching data
+                dispatch(setLoadingState(true));
+                // get list of services
+                const { count, services } = await fetchServicesByCountry(
+                    country.Id,
+                    currentSubCategory.Id || null,
+                    currentPage,
+                    +process.env.REACT_APP_PER_PAGE!,
+                );
+                // after finish fetching => hide loading indicator by set loading indicator to false
+                await setTotalCount(count);
+                await setServices(services);
+                // window.scrollTo(0, 0);
+                dispatch(setLoadingState(false));
+            } catch (error) {
+                console.log(error);
+                dispatch(setLoadingState(false));
+            }
         }
-        try {
-            loadData();
-        } catch (error) {
-            console.log(error);
-            dispatch(setLoadingState(false));
-        }
+        loadData();
     }, [
         country.Id,
         currentPage,
@@ -78,17 +78,16 @@ export const HomeTemplete: FC<HomeTempleteProps> = () => {
 
     return (
         <>
+            {isLoading && <Loader />}
             <FilterBar
                 setCurrentCategory={setCurrentCategory}
                 setCurrentSubCategory={setCurrentSubCategory}
             />
-            {isLoading ? (
-                <Loader />
-            ) : (
-                <Container>
-                    <ServiceCardContainer services={services} />
-                </Container>
-            )}
+
+            <Container>
+                <ServiceCardContainer services={services} />
+            </Container>
+
             <Pagination
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}

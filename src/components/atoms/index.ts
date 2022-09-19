@@ -12,3 +12,6 @@ export * from "./error-message";
 export * from "./file-card";
 export * from "./note";
 export * from "./notes";
+export * from "./password-input";
+export * from "./social-icons";
+export * from "./radio-button";

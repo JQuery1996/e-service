@@ -1,84 +1,78 @@
+import React, { useState } from "react";
 import {
     FormControl,
     InputLabel,
-    Select,
-    MenuItem,
     FormHelperText,
-    SelectProps,
-    SelectChangeEvent,
-    Box,
-    Chip,
+    TextFieldProps,
+    TextField,
+    MenuItem,
 } from "@mui/material";
+import { ErrorMessage } from "../error-message";
 
-interface IESelect extends SelectProps {
-    value: any;
-    setValue: (value: any) => void;
+type IESelect = TextFieldProps & {
     label: string;
-    helperText?: string;
+    errorMessage?: string;
     options: { value: any | number; label: string }[];
-    color?:
-        | "error"
-        | "primary"
-        | "secondary"
-        | "info"
-        | "success"
-        | "warning"
-        | undefined;
-}
-export function ESelect({
-    value,
-    setValue,
-    label,
-    options,
-    helperText,
-    color,
-    ...props
-}: IESelect) {
-    function handleChange(e: SelectChangeEvent<any>) {
-        setValue(e.target.value);
-    }
-    return (
-        <FormControl
-            style={{ marginLeft: 2, marginRight: 2 }}
-            fullWidth
-            color={color ?? "primary"}
-        >
-            <InputLabel>{label}</InputLabel>
-            <Select
-                id=""
-                value={value.Id ? value : ""}
-                label={label}
-                onChange={handleChange}
-                renderValue={(selected) => (
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            gap: 0.5,
-                        }}
-                    >
-                        <Chip
-                            color="primary"
-                            label={value.Name_L2}
-                            style={{ borderRadius: 4 }}
-                        />
-                    </Box>
-                )}
-                {...props}
-            >
-                <MenuItem dir="rtl" value="" disabled>
-                    <em>يرجى إختيار عنصر من القائمة</em>
-                </MenuItem>
+    required?: boolean;
+};
+export const ESelect = React.forwardRef<any, IESelect>(
+    (
+        { label, error, errorMessage, options, required, value, ...props },
+        ref,
+    ) => {
+        const [dirty, setDirty] = useState<boolean>(false);
 
-                {options.map(({ label, value }, index) => (
-                    <MenuItem key={index} value={value} dir="rtl">
+        let initialValue: any = value;
+        if (
+            value === null ||
+            value === undefined ||
+            (typeof value === "object" &&
+                !Array.isArray(value) &&
+                Object.keys(value).length === 0)
+        )
+            initialValue = "";
+
+        return (
+            <FormControl
+                variant="standard"
+                fullWidth
+                required={Boolean(required)}
+            >
+                {label && (
+                    <InputLabel shrink htmlFor="select-input">
                         {label}
+                    </InputLabel>
+                )}
+                <TextField
+                    id="select-input"
+                    onFocus={() => setDirty(true)}
+                    onBlur={() => setDirty(false)}
+                    select
+                    inputRef={ref}
+                    sx={{
+                        "label + &": {
+                            marginTop: 3,
+                        },
+                        height: 50,
+                    }}
+                    value={initialValue}
+                    {...props}
+                >
+                    <MenuItem value="" dir="rtl">
+                        <em>يرجى إختيار عنصر من القائمة</em>
                     </MenuItem>
-                ))}
-            </Select>
-            {helperText && helperText.length > 0 && (
-                <FormHelperText>{helperText}</FormHelperText>
-            )}
-        </FormControl>
-    );
-}
+                    {options.map((option, index) => (
+                        <MenuItem dir="rtl" key={index} value={option.value}>
+                            {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+                {dirty && error && (
+                    <FormHelperText error sx={{ fontWeight: "bold", mt: 1 }}>
+                        <ErrorMessage message={errorMessage ?? ""} />
+                    </FormHelperText>
+                )}
+            </FormControl>
+        );
+    },
+);

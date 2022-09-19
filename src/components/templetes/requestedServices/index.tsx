@@ -13,9 +13,12 @@ import {
     TableBody,
     Chip,
 } from "@mui/material";
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { SettingsSuggest as SettingSuggestIcon } from "@mui/icons-material";
+import {
+    SettingsSuggest as SettingSuggestIcon,
+    Numbers as NumbersIcon,
+} from "@mui/icons-material";
 import { IRequestInformation } from "core/types";
 import { useAppDispatch } from "app/hooks";
 import { useLoader } from "utils/hooks/useLoader";
@@ -58,6 +61,16 @@ export const ReqestedServicesTemplete: FC<
         fetchRequestList();
     }, [authenticatedUser, dispatch, setLoadingState, setRequestList]);
 
+    const sortedRequests = useMemo(
+        () =>
+            requestList.sort(
+                (aRequest, bRequest) =>
+                    new Date(bRequest.CreationDate).getTime() -
+                    new Date(aRequest.CreationDate).getTime(),
+            ),
+        [requestList],
+    );
+
     return isLoading ? (
         <Loader />
     ) : (
@@ -73,11 +86,17 @@ export const ReqestedServicesTemplete: FC<
             </Stack>
             <Divider sx={{ my: 3 }} />
             <Grid container sx={{ mt: 4 }}>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 600 }} aria-label="request-table">
+                <TableContainer component={Paper} sx={{ maxHeight: 500 }}>
+                    <Table
+                        sx={{ minWidth: 600 }}
+                        aria-label="request-table"
+                        stickyHeader
+                    >
                         <TableHead>
                             <TableRow>
-                                <TableCell>رقم الطلب</TableCell>
+                                <TableCell>
+                                    <NumbersIcon />
+                                </TableCell>
                                 <TableCell>اسم الخدمة</TableCell>
                                 <TableCell>رقم الموبايل</TableCell>
                                 <TableCell>الإيميل</TableCell>
@@ -86,7 +105,7 @@ export const ReqestedServicesTemplete: FC<
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {requestList.map((request) => (
+                            {sortedRequests.map((request) => (
                                 <TableRow
                                     key={request.Id}
                                     sx={{

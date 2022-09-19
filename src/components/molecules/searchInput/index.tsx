@@ -43,7 +43,7 @@ export function SerchInput() {
             <Grid item xs="auto">
                 <Button
                     onClick={() => {
-                        navigate("/service/filter");
+                        navigate(process.env.REACT_APP_FRONT_END_HOME_PAGE!);
                     }}
                     sx={{
                         height: "100%",

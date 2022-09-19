@@ -2,8 +2,8 @@ import { Container, Link, Stack, Typography } from "@mui/material";
 import { LoginForm } from "components/molecules";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import "../../../assets/css/login.css";
-import "../../../assets/css/auth.css";
+import "assets/css/login.css";
+import "assets/css/auth.css";
 
 export interface LoginTempleteProps {}
 
@@ -15,7 +15,7 @@ export const LoginTemplete: FC<LoginTempleteProps> = () => {
                 <div className="asid-div">
                     <div className="smile-img-container">
                         <img
-                            src={require("../../../assets/images/smile.png")}
+                            src={require("assets/images/smile.png")}
                             className="smile-img"
                             alt="smile-img"
                         />
@@ -23,7 +23,7 @@ export const LoginTemplete: FC<LoginTempleteProps> = () => {
 
                     <div className="bank-img-container">
                         <img
-                            src={require("../../../assets/images/bank.png")}
+                            src={require("assets/images/bank.png")}
                             className="bank-img"
                             alt="bank-img"
                         />

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
     FormControl,
     InputBaseProps,
@@ -5,26 +6,39 @@ import {
     OutlinedInput,
     FormHelperText,
 } from "@mui/material";
-import React from "react";
+import { ErrorMessage } from "../error-message";
 
 export interface EInputProps extends InputBaseProps {
     label?: string;
     errorMessage?: string;
     isPinInput?: boolean;
+    required?: boolean;
 }
 
 const EInput = React.forwardRef<any, EInputProps>(
-    ({ label, sx, error, errorMessage, isPinInput, ...props }, ref) => {
+    (
+        { label, sx, error, errorMessage, isPinInput, required, ...props },
+        ref,
+    ) => {
         //Hooks
+        const [dirty, setDirty] = useState<boolean>(false);
 
         return (
-            <FormControl variant="standard" fullWidth sx={{ ...sx }}>
+            <FormControl
+                variant="standard"
+                fullWidth
+                sx={{ ...sx }}
+                required={required}
+            >
                 {label && (
                     <InputLabel shrink htmlFor="bootstrap-input">
                         {label}
                     </InputLabel>
                 )}
                 <OutlinedInput
+                    id="select-input"
+                    onFocus={() => setDirty(true)}
+                    onBlur={() => setDirty(false)}
                     inputRef={ref}
                     sx={{
                         "label + &": {
@@ -36,9 +50,9 @@ const EInput = React.forwardRef<any, EInputProps>(
                     {...(isPinInput && { inputProps: { maxLength: 1 } })}
                     {...props}
                 />
-                {error && (
+                {dirty && error && (
                     <FormHelperText error sx={{ fontWeight: "bold" }}>
-                        {errorMessage}
+                        <ErrorMessage message={errorMessage ?? ""} />
                     </FormHelperText>
                 )}
             </FormControl>

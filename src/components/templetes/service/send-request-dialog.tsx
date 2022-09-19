@@ -10,7 +10,7 @@ import {
     Grid,
     List,
     ListItemText,
-    responsiveFontSizes,
+    Paper,
     Stack,
     Typography,
 } from "@mui/material";
@@ -91,9 +91,20 @@ export function SendRequestDialog({
         if (!serviceRequestValidation(serviceRequest, serviceForm)) return;
         try {
             dispatch(setLoadingState(true));
+            const sendRequest: IRequest = {
+                ...serviceRequest,
+                Fields: serviceRequest.Fields.map((req) => {
+                    if (Array.isArray(req.value))
+                        return {
+                            ...req,
+                            value: req.value.join(","),
+                        };
+                    return req;
+                }),
+            };
             const response = await ReactAxios.post(
                 process.env.REACT_APP_ADD_REQUEST!,
-                serviceRequest,
+                sendRequest,
             );
             if (response.data.Code === 400) {
                 dispatch(setLoadingState(false));
@@ -179,6 +190,8 @@ export function SendRequestDialog({
                                             color="error"
                                             sx={{ borderRadius: 1 }}
                                             size="small"
+                                            component={Paper}
+                                            elevation={5}
                                         />
                                     </Typography>
                                 }
@@ -248,6 +261,8 @@ export function SendRequestDialog({
                                                                 borderRadius: 1,
                                                             }}
                                                             size="small"
+                                                            component={Paper}
+                                                            elevation={5}
                                                         />
                                                     </Typography>
                                                 }
@@ -275,6 +290,8 @@ export function SendRequestDialog({
                                 sx={{ borderRadius: 1 }}
                                 color="info"
                                 label={totalCost + " " + currentCurrency.code}
+                                component={Paper}
+                                elevation={5}
                             />
                         </Typography>
                     </Stack>

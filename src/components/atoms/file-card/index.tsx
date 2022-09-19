@@ -1,7 +1,6 @@
 import { useMemo } from "react";
-import { Divider, Tooltip, Typography } from "@mui/material";
+import { Stack, Divider, Tooltip, Typography } from "@mui/material";
 
-import { Stack } from "@mui/system";
 import { IDocumentType } from "core/types";
 import moment from "moment";
 

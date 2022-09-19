@@ -28,7 +28,7 @@ export const ResponsiveAppBar = () => {
                         }}
                     >
                         <img
-                            src={require("../../../assets/images/logo.png")}
+                            src={require("assets/images/logo.png")}
                             alt="logo"
                         ></img>
                     </Button>

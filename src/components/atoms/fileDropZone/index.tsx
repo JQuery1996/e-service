@@ -1,4 +1,4 @@
-import { Stack, SvgIcon, Typography } from "@mui/material";
+import { Paper, Stack, SvgIcon, Typography } from "@mui/material";
 import { Box, BoxProps } from "@mui/system";
 import { Dispatch, FC, SetStateAction, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -11,6 +11,8 @@ import { useAuth } from "utils/hooks/useAuth";
 import ReactAxios from "utils/axios";
 import { Loader } from "features/loader/Loader";
 import { notify } from "utils/toastify-notification";
+import { useAppDispatch } from "app/hooks";
+import { useLoader } from "utils/hooks/useLoader";
 // FETCH_UPLOAD_URL_FROM_ENV_FILE
 const UPLOAD_FILE_URL = process.env.REACT_APP_UPLOAD_FILE!;
 
@@ -66,7 +68,8 @@ export const FileDropZone: FC<FileDropZoneProps> = ({
     const { authenticatedUser } = useAuth();
     //Hooks
     const [file, setFile] = useState<any>(null);
-    const [fileLoader, setFileLoader] = useState<boolean>(false);
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         accept: ["application/pdf", "image/png", "image/jpeg", "image/jpg"],
@@ -101,7 +104,8 @@ export const FileDropZone: FC<FileDropZoneProps> = ({
 
             try {
                 if (!setUploadedFiles) return null;
-                setFileLoader(true);
+                // setFileLoader(true);
+                setLoading(true);
                 const responsedDocument = await ReactAxios.post(
                     UPLOAD_FILE_URL,
                     formData,
@@ -135,9 +139,9 @@ export const FileDropZone: FC<FileDropZoneProps> = ({
                             );
                     });
                 }
-                setFileLoader(false);
+                setLoading(false);
             } catch (error) {
-                setFileLoader(false);
+                setLoading(false);
                 setFile(null);
                 notify("error", t("upload_file_failed"));
                 console.log(error);
@@ -159,11 +163,15 @@ export const FileDropZone: FC<FileDropZoneProps> = ({
     );
 
     return (
-        <Box {...getRootProps()} {...props}>
-            <input {...getInputProps()} />
-            {fileLoader ? (
-                <Loader specific />
-            ) : (
+        <>
+            {loading && <Loader />}
+            <Paper
+                {...getRootProps()}
+                {...props}
+                component={Box}
+                elevation={10}
+            >
+                <input {...getInputProps()} />
                 <Box
                     sx={{
                         border: !isDragActive
@@ -201,7 +209,7 @@ export const FileDropZone: FC<FileDropZoneProps> = ({
                     </Stack>
                     <aside style={thumbsContainer}>{thumbs}</aside>
                 </Box>
-            )}
-        </Box>
+            </Paper>
+        </>
     );
 };

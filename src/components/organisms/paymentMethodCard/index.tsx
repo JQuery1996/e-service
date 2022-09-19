@@ -27,6 +27,7 @@ import { AddCard as AddCardIcon } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 import { Loader } from "features/loader/Loader";
 import { notify } from "utils/toastify-notification";
+import { useNavigate } from "react-router";
 
 const PAYMENT_METHOD_LIST_URL = process.env.REACT_APP_GET_PAYMENT_METHOD_LIST!;
 const PAYMENT_LOGO_DOWNLOAD_URL = process.env.REACT_APP_DOWNLOAD_PAYMENT_LOGO!;
@@ -55,6 +56,8 @@ export function PaymentMethodCard({
     const dispatch = useAppDispatch();
     const { isLoading, setLoadingState } = useLoader();
 
+    const navigation = useNavigate();
+
     function handleClickOpen() {
         setOpen(true);
     }
@@ -65,6 +68,7 @@ export function PaymentMethodCard({
 
     function handleSelectPaymentMethod(payment: IResponsePaymentMethod) {
         notify("success", "تم الدفع بنجاح");
+        navigation("/service/requested");
         handleClose();
     }
 
@@ -76,7 +80,6 @@ export function PaymentMethodCard({
                     PAYMENT_METHOD_LIST_URL,
                 );
                 setPaymentMethods(responsedPaymentMethodsList.data.data);
-
                 dispatch(setLoadingState(false));
             } catch (error) {
                 dispatch(setLoadingState(false));

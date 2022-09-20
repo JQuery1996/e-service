@@ -92,7 +92,9 @@ export function buildFormFields({
                         value={FieldValue}
                         onChange={(e) => handleChange(e, Field)}
                         required={Field.Required}
-                        error={Validator.nonEmptyStringValidation(FieldValue)}
+                        error={
+                            Field.Required && !Validator.required(FieldValue)
+                        }
                         errorMessage={i18n.t("field_is_required")}
                     />
                 );
@@ -247,7 +249,7 @@ export function buildFormFields({
                                     sx={{
                                         display: "flex",
                                         flexWrap: "wrap",
-                                        maxHeight: 100,
+                                        maxHeight: 75,
                                         overflowY: "auto",
                                         gap: 0.5,
                                     }}
@@ -301,7 +303,7 @@ export function buildFormFields({
                     sm={12}
                     md={4}
                     lg={4}
-                    sx={{ mx: 2, mb: 4 }}
+                    sx={{ mx: 2, mb: 5 }}
                 >
                     {buildInput(serviceField)}
                 </Grid>

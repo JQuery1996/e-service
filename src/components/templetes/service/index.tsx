@@ -233,13 +233,26 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
                                 />
                             }
                             title={
-                                <Stack direction="row" spacing={1}>
+                                <Typography
+                                    variant="h5"
+                                    color="primary"
+                                    sx={{ fontWeight: "bold" }}
+                                >
+                                    {t("add_request")}
+                                </Typography>
+                            }
+                            titleTypographyProps={{
+                                fontWeight: "bold",
+                                variant: "body1",
+                            }}
+                            subheader={
+                                <Stack direction="row" spacing={0.5}>
                                     <Typography
-                                        variant="h5"
+                                        variant="caption"
                                         color="primary"
                                         sx={{ fontWeight: "bold" }}
                                     >
-                                        {t("add_request")}
+                                        {service.Name_L2}
                                     </Typography>
                                     <Chip
                                         dir="ltr"
@@ -256,17 +269,11 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
                                         variant="filled"
                                         size="small"
                                         sx={{ borderRadius: 1 }}
-                                        style={{ marginTop: 6 }}
                                         component={Paper}
                                         elevation={5}
                                     />
                                 </Stack>
                             }
-                            titleTypographyProps={{
-                                fontWeight: "bold",
-                                variant: "body1",
-                            }}
-                            subheader={service.Name_L2}
                             action={
                                 <FormControl
                                     fullWidth

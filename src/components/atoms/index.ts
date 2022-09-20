@@ -15,3 +15,4 @@ export * from "./notes";
 export * from "./password-input";
 export * from "./social-icons";
 export * from "./radio-button";
+export * from "./date";

@@ -5,4 +5,6 @@ export enum ENUM_INPUT_TYPE_MAPPER {
     RADIO_BUTTON = 3,
     SINGLE_SELECT = 4,
     MULTIPLE_SELECT = 5,
+    DATE_TIME_PICKER = 6,
+    CHECK_BOX = 7,
 }

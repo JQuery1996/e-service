@@ -44,7 +44,7 @@ const EInput = React.forwardRef<any, EInputProps>(
                         "label + &": {
                             marginTop: 3,
                         },
-                        height: 50,
+                        // height: 50,
                         ...(isPinInput && { borderRadius: 3 }),
                     }}
                     {...(isPinInput && { inputProps: { maxLength: 1 } })}

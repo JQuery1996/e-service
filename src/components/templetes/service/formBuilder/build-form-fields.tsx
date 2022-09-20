@@ -1,45 +1,20 @@
 import { IField, IRequest, ENUM_INPUT_TYPE_MAPPER } from "core/types";
 import i18n from "i18n";
-
+import dayjs, { Dayjs } from "dayjs";
 import {
     Box,
     Chip,
-    FormControl,
     FormControlLabel,
-    FormLabel,
     Grid,
-    InputLabel,
-    MenuItem,
-    OutlinedInput,
     Paper,
     Radio,
-    RadioGroup,
-    Select,
     SelectChangeEvent,
-    TextField,
 } from "@mui/material";
 import React, { Dispatch, SetStateAction } from "react";
 import { Validator } from "utils/validation";
-import {
-    EInput,
-    ERadio,
-    ErrorMessage,
-    ESelect,
-    ETextarea,
-} from "components/atoms";
+import { EDate, EInput, ERadio, ESelect, ETextarea } from "components/atoms";
 
 import { TaskAlt as TaskAltIcon } from "@mui/icons-material";
-import i18next from "i18next";
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
 
 export function buildFormFields({
     serviceFields,
@@ -72,6 +47,20 @@ export function buildFormFields({
                         //             : e.target.value
                         //         : e.target.value,
                         value: e.target.value,
+                    };
+            }),
+        }));
+    }
+    function handleChangeDate(newDate: string, currentChangedField: IField) {
+        setServiceRequest((currentRequest) => ({
+            ...currentRequest,
+            Fields: currentRequest.Fields.map((Field) => {
+                if (Field.title_L1 !== currentChangedField.Name_L1)
+                    return Field;
+                else
+                    return {
+                        ...Field,
+                        value: newDate,
                     };
             }),
         }));
@@ -161,30 +150,6 @@ export function buildFormFields({
                 );
             case ENUM_INPUT_TYPE_MAPPER.SINGLE_SELECT: // case for #Select
                 return (
-                    // <FormControl fullWidth>
-                    //     <InputLabel
-                    //         id={`controlled-select-label-${Field.Name_L1}`}
-                    //     >
-                    //         {Field.Name_L2}
-                    //     </InputLabel>
-                    //     <Select
-                    //         labelId={`controlled-select-label-${Field.Name_L1}`}
-                    //         id={`controlled-select-${Field.Name_L1}`}
-                    //         label={Field.Name_L2}
-                    //         value={FieldValue}
-                    //         onChange={(e) => handleChange(e, Field)}
-                    //     >
-                    //         {Field.Options?.map((Option) => (
-                    //             <MenuItem
-                    //                 dir="rtl"
-                    //                 key={Option.Id}
-                    //                 value={Option.Value_L2}
-                    //             >
-                    //                 {Option.Value_L2}
-                    //             </MenuItem>
-                    //         ))}
-                    //     </Select>
-                    // </FormControl>
                     <ESelect
                         label={Field.Name_L2 ?? ""}
                         required={Field.Required}
@@ -207,24 +172,6 @@ export function buildFormFields({
                 );
             case ENUM_INPUT_TYPE_MAPPER.MULTIPLE_SELECT: // case for multiple Select
                 return (
-                    // <FormControl fullWidth>
-                    //     <InputLabel
-                    //         id={`controlled-multiple-select-label-${Field.Name_L1}`}
-                    //     >
-                    //         {Field.Name_L2}
-                    //     </InputLabel>
-                    //     <Select
-                    //         labelId={`controlled-multiple-select-label-${Field.Name_L1}`}
-                    //         id={`controlled-multiple-select-${Field.Name_L1}`}
-                    //         label={Field.Name_L2}
-                    //         value={FieldValue}
-                    //         onChange={(e) => handleChange(e, Field)}
-                    //         multiple
-                    //         renderValue={(selected) => selected.join(", ")}
-                    //         MenuProps={MenuProps}
-                    //     ></Select>
-                    // </FormControl>
-
                     <ESelect
                         label={Field.Name_L2 ?? ""}
                         required={Field.Required}
@@ -267,6 +214,21 @@ export function buildFormFields({
                                 </Box>
                             ),
                         }}
+                    />
+                );
+            case ENUM_INPUT_TYPE_MAPPER.DATE_TIME_PICKER:
+                return (
+                    <EDate
+                        label={Field.Name_L2 ?? ""}
+                        date={FieldValue}
+                        setDate={(newDate) =>
+                            handleChangeDate(newDate.toString(), Field)
+                        }
+                        required={Field.Required}
+                        error={
+                            Field.Required && !Validator.required(FieldValue)
+                        }
+                        errorMessage={i18n.t("field_is_required")}
                     />
                 );
             default:

@@ -14,6 +14,7 @@ export function Loader() {
                 position: "fixed",
                 top: 0,
                 left: 0,
+                zIndex: 1,
             }}
         >
             <img src={require("assets/images/loader.gif")} alt="loading" />

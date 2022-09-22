@@ -224,7 +224,7 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
                 </Grid>
 
                 {serviceForm && serviceForm.Fields.length > 0 && (
-                    <Card elevation={24} sx={{ mt: 4 }}>
+                    <Paper component={Card} elevation={24} sx={{ mt: 4 }}>
                         <CardHeader
                             avatar={
                                 <ApprovalOutlinedIcon
@@ -341,7 +341,7 @@ export const ServiceTemplete: FC<ServiceTempleteProps> = ({
                                 {t("submit_form")}
                             </Button>
                         </CardActions>
-                    </Card>
+                    </Paper>
                 )}
             </Container>
 

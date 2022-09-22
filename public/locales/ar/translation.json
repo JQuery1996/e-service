@@ -72,5 +72,7 @@
     "send": "إرسال",
     "added_note_success": "تم إضافة الملاحظة بنجاح",
     "added_note_failed": "حدث خطأ أثناء إضافة الملاحظة",
-    "select_payment_method": "اختر طريقة الدفع"
+    "select_payment_method": "اختر طريقة الدفع",
+    "invalid_date": "صيغة التاريخ غير صحيحة",
+    "guest": "زائر"
 }

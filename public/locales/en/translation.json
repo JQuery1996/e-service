@@ -72,5 +72,7 @@
     "send": "Send",
     "added_note_success": "Note has been added successfully",
     "added_note_failed": "an error occurred while adding the note",
-    "select_payment_method": "Please Select The Payment Method"
+    "select_payment_method": "Please Select The Payment Method",
+    "invalid_date": "Invalid Date",
+    "guest": "Guest"
 }

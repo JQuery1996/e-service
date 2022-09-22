@@ -1,7 +1,7 @@
 import React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { lightTheme } from "themes";
-import { CssBaseline } from "@mui/material";
+import { Box, CssBaseline, Paper } from "@mui/material";
 import Routes from "routes";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
@@ -23,12 +23,12 @@ function App() {
             {/*For right dirction rtl*/}
             <CacheProvider value={cacheRtl}>
                 <CssBaseline />
-                <div dir="rtl">
+                <Box dir="rtl">
                     {/*Web routes*/}
                     <Provider store={store}>
                         <Routes />
                     </Provider>
-                </div>
+                </Box>
                 <ToastContainer rtl />
             </CacheProvider>
         </ThemeProvider>

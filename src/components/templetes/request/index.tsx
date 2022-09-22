@@ -9,14 +9,12 @@ import {
     CardContent,
     Grid,
     Divider,
-    TextField,
     CircularProgress,
     Paper,
 } from "@mui/material";
 import {
     Label as LabelIcon,
     AccessTime as AccessTimeIcon,
-    ChevronLeft as ChevronLeftIcon,
     EmailOutlined as EmailOutlinedIcon,
     LocalPhoneOutlined as LocalPhoneOutlinedIcon,
     LabelImportant as LabelImportantIcon,
@@ -270,7 +268,7 @@ export function RequestTemplate({
                             <Stack
                                 direction="row"
                                 spacing={4}
-                                sx={{ mt: 4, mx: 2 }}
+                                sx={{ mt: 4, mx: 2, overflow: "auto" }}
                             >
                                 {request.documents?.map((document, index) => (
                                     <FileCard

@@ -3,6 +3,7 @@
 // project imports
 import { MinimalLayout } from "containers/layout";
 import { lazy } from "react";
+import { RouteObject } from "react-router";
 
 const Login = lazy(() => import("pages/login"));
 const ResetPassword = lazy(() => import("pages/resetPassword"));
@@ -12,33 +13,34 @@ const SelectCountry = lazy(() => import("pages/selectCountry"));
 
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
 
-const PublicRoutes = {
+const PublicRoutes: RouteObject = {
     path: "/auth",
     element: <MinimalLayout />,
     children: [
         {
             path: "login",
-            expect: true,
+            // there is no expect property in RouterObject
+            // expect: true,
             element: <Login />,
         },
         {
             path: "reset-password",
-            expect: true,
+            // expect: true,
             element: <ResetPassword />,
         },
         {
             path: "verify",
-            expect: true,
+            // expect: true,
             element: <Verify />,
         },
         {
             path: "register",
-            expect: true,
+            // expect: true,
             element: <Register />,
         },
         {
             path: "select-country",
-            expect: true,
+            // expect: true,
             element: <SelectCountry />,
         },
     ],

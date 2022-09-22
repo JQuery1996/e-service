@@ -2,7 +2,7 @@ import { Container, Grid, Link, Toolbar, Typography } from "@mui/material";
 import { SubmitInput } from "components/molecules";
 import { useTranslation } from "react-i18next";
 import { FC } from "react";
-import "../../../assets/css/main.css";
+import "assets/css/main.css";
 
 export interface FooterProps {}
 

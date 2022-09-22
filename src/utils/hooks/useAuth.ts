@@ -9,6 +9,8 @@ import { useNavigate } from "react-router";
 import { Theme, toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 
+const HOME_PAGE_URL = process.env.REACT_APP_FRONT_END_HOME_PAGE!;
+
 export function useAuth() {
     const { t } = useTranslation();
     const navigate = useNavigate();
@@ -20,7 +22,7 @@ export function useAuth() {
     );
 
     const login = useCallback(
-        async (email: string, password: string) => {
+        async (email: string, password: string, previousPage?: string) => {
             try {
                 dispatch(setLoadingState(true));
                 const response = await ReactAxios.post(
@@ -31,7 +33,7 @@ export function useAuth() {
                 await setToken(responseToken);
                 await dispatch(setAuthUser(decode(responseToken)));
                 await dispatch(setLoadingState(false));
-                navigate(process.env.REACT_APP_FRONT_END_HOME_PAGE!, {
+                navigate(previousPage ?? HOME_PAGE_URL, {
                     replace: true,
                 });
             } catch (error: any) {

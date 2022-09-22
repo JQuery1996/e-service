@@ -1,6 +1,5 @@
 import { IField, IRequest, ENUM_INPUT_TYPE_MAPPER } from "core/types";
 import i18n from "i18n";
-import dayjs, { Dayjs } from "dayjs";
 import {
     Box,
     Chip,
@@ -52,6 +51,8 @@ export function buildFormFields({
         }));
     }
     function handleChangeDate(newDate: string, currentChangedField: IField) {
+        console.log("New Date is ");
+        console.log(newDate);
         setServiceRequest((currentRequest) => ({
             ...currentRequest,
             Fields: currentRequest.Fields.map((Field) => {
@@ -221,14 +222,17 @@ export function buildFormFields({
                     <EDate
                         label={Field.Name_L2 ?? ""}
                         date={FieldValue}
-                        setDate={(newDate) =>
-                            handleChangeDate(newDate.toString(), Field)
-                        }
+                        setDate={(newDate) => {
+                            handleChangeDate(
+                                newDate ? newDate.toString() : null,
+                                Field,
+                            );
+                        }}
                         required={Field.Required}
                         error={
                             Field.Required && !Validator.required(FieldValue)
                         }
-                        errorMessage={i18n.t("field_is_required")}
+                        errorMessage={i18n.t("invalid_date")}
                     />
                 );
             default:

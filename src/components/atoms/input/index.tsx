@@ -22,7 +22,6 @@ const EInput = React.forwardRef<any, EInputProps>(
     ) => {
         //Hooks
         const [dirty, setDirty] = useState<boolean>(false);
-
         return (
             <FormControl
                 variant="standard"
@@ -36,7 +35,7 @@ const EInput = React.forwardRef<any, EInputProps>(
                     </InputLabel>
                 )}
                 <OutlinedInput
-                    id="select-input"
+                    id={`select-input-${label}`}
                     onFocus={() => setDirty(true)}
                     onBlur={() => setDirty(false)}
                     inputRef={ref}

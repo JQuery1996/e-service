@@ -79,6 +79,7 @@ export const HomeTemplete: FC<HomeTempleteProps> = () => {
     return (
         <>
             {isLoading && <Loader />}
+
             <FilterBar
                 setCurrentCategory={setCurrentCategory}
                 setCurrentSubCategory={setCurrentSubCategory}

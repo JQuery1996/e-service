@@ -3,6 +3,7 @@
 // project imports
 import { MainLayout } from "containers/layout";
 import { lazy } from "react";
+import { RouteObject } from "react-router";
 
 const Home = lazy(() => import("pages/home"));
 const Service = lazy(() => import("pages/service"));
@@ -15,10 +16,10 @@ const BuyService = lazy(() => import("pages/buyService"));
 const Request = lazy(() => import("pages/request"));
 // ==============================|| MAIN ROUTING ||============================== //
 
-const ProtectedRoutes = {
+const ProtectedRoutes: RouteObject = {
     path: "/",
     element: <MainLayout />,
-    expect: true,
+    // expect: true,
     children: [
         {
             path: "/",
@@ -27,17 +28,17 @@ const ProtectedRoutes = {
         {
             path: "/service/:id",
             element: <Service />,
-            expect: true,
+            // expect: true,
         },
         {
             path: "/service/select-patment",
             element: <SelectPayment />,
-            expect: true,
+            // expect: true,
         },
         {
             path: "/service/buy",
             element: <BuyService />,
-            expect: true,
+            // expect: true,
         },
         {
             path: "/profile",
@@ -45,22 +46,22 @@ const ProtectedRoutes = {
         },
         {
             path: "/service/filter",
-            expect: true,
+            // expect: true,
             element: <FilterServices />,
         },
         {
             path: "/service/requested",
-            expect: true,
+            // expect: true,
             element: <ReqestedServices />,
         },
         {
             path: "/service/requested/:id",
-            expect: true,
+            // expect: true,
             element: <Request />,
         },
         {
             path: "/service/result",
-            expect: true,
+            // expect: true,
             element: <PaymentResult />,
         },
         {

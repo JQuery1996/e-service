@@ -1,4 +1,4 @@
-import { Button, Grid, Typography, Link, Box, Stack } from "@mui/material";
+import { Button, Grid, Typography, Link } from "@mui/material";
 
 import { EInput, PasswordInput, SocialIcons } from "components/atoms";
 import { FC } from "react";
@@ -9,6 +9,7 @@ import { useAuth } from "utils/hooks/useAuth";
 import { Login as LoginIcon } from "@mui/icons-material";
 import { useLoader } from "utils/hooks/useLoader";
 import { Loader } from "features/loader/Loader";
+import { useLocation, useNavigate } from "react-router";
 
 export interface LoginFormProps {}
 
@@ -20,8 +21,12 @@ export const LoginForm: FC<LoginFormProps> = ({ ...props }) => {
         useLoginState(passwordValidationConfig);
 
     const { isLoading } = useLoader();
-
     const { login } = useAuth();
+
+    const location = useLocation();
+    const from = location.state
+        ? (location.state as { from: string }).from
+        : undefined;
 
     return (
         <>
@@ -63,7 +68,7 @@ export const LoginForm: FC<LoginFormProps> = ({ ...props }) => {
                     <div className="action-btn-div">
                         <Button
                             className="action-btn"
-                            onClick={() => login(email, password)}
+                            onClick={() => login(email, password, from)}
                             disabled={disableLogin}
                             size="large"
                             startIcon={<LoginIcon />}

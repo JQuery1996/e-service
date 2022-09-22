@@ -6,10 +6,11 @@ import {
     Stack,
     Typography,
     Link,
+    Paper,
 } from "@mui/material";
 import { FC } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { settingNav, settings } from "constants/layout";
+import { INavSettings, settings } from "constants/layout";
 import useMenuToggle from "utils/hooks/useMenuToggle";
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
@@ -39,7 +40,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = () => {
             >
                 <Link href="#" className="notification">
                     <img
-                        src={require("../../../assets/images/notification.png")}
+                        src={require("assets/images/notification.png")}
                         alt="notification"
                         style={{ marginTop: 6 }}
                     ></img>
@@ -56,7 +57,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = () => {
                 >
                     <Typography color={"GrayText"}>{t("welcome")}. </Typography>
                     <Typography color="primary">
-                        {authenticatedUser!.username}
+                        {authenticatedUser?.username ?? t("guest")}
                     </Typography>
                 </Stack>
                 <ExpandMoreIcon
@@ -66,39 +67,60 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = () => {
             </Stack>
 
             <Menu
-                sx={{ mt: "45px" }}
+                sx={{ mt: 5 }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
-                anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
                 dir="rtl"
-                // keepMounted
-                transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                }}
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseMenu}
+                PaperProps={{
+                    elevation: 10,
+                    sx: {
+                        overflow: "visible",
+                        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                        "& .MuiAvatar-root": {
+                            width: 32,
+                            height: 32,
+                            ml: -0.5,
+                            mr: 1,
+                        },
+                        "&:before": {
+                            content: '""',
+                            display: "block",
+                            position: "absolute",
+                            top: 0,
+                            right: { xs: "5%", md: "50%" },
+                            width: 10,
+                            height: 10,
+                            bgcolor: "background.paper",
+                            transform: "translateY(-50%) rotate(45deg)",
+                            zIndex: 0,
+                        },
+                    },
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "top" }}
             >
-                {settings.map(({ name, path, sx, icon }: settingNav) => (
-                    <MenuItem
-                        key={name}
-                        onClick={
-                            name === "logout"
-                                ? logout
-                                : () => {
-                                      navigate(path);
-                                      handleCloseMenu();
-                                  }
-                        }
-                        sx={sx}
-                    >
-                        <ListItemIcon>{icon}</ListItemIcon>
-                        <Typography textAlign="center">{t(name)}</Typography>
-                    </MenuItem>
-                ))}
+                {settings(Boolean(authenticatedUser)).map(
+                    ({ name, path, sx, icon }: INavSettings) => (
+                        <MenuItem
+                            key={name}
+                            onClick={
+                                name === "logout"
+                                    ? logout
+                                    : () => {
+                                          navigate(path);
+                                          handleCloseMenu();
+                                      }
+                            }
+                        >
+                            <ListItemIcon>{icon}</ListItemIcon>
+                            <Typography textAlign="center" sx={sx}>
+                                {t(name)}
+                            </Typography>
+                        </MenuItem>
+                    ),
+                )}
             </Menu>
         </div>
     );
